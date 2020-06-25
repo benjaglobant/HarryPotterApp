@@ -24,6 +24,8 @@ android {
     }
 }
 
+preBuild.dependsOn ktlint
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
