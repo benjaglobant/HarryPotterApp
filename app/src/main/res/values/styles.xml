@@ -58,4 +58,17 @@
         <item name="android:layout_marginTop">@dimen/house_detail_fragment_view_margin_top</item>
     </style>
 
+    <style name="style_main_activity_base_button">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginStart">@dimen/main_activity_button_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/main_activity_button_margin_horizontal</item>
+    </style>
+
+    <style name="style_main_activity_button_margin_top" parent="style_main_activity_base_button">
+        <item name="android:layout_marginTop">@dimen/main_activity_button_margin_vertical</item>
+    </style>
+
+    <style name="style_main_activity_button_margin_bottom" parent="style_main_activity_base_button">
+        <item name="android:layout_marginBottom">@dimen/main_activity_button_margin_vertical</item>
+    </style>
 </resources>
