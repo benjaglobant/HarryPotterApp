@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 preBuild.dependsOn ktlint
@@ -36,5 +40,9 @@ dependencies {
     implementation lib.kotlin
     implementation lib.appcompat
     implementation lib.corektx
-
+    implementation lib.constraintlayout
+    implementation lib.coroutines
+    implementation lib.koinviewmodel
+    implementation lib.androidxlifecycle
+    implementation lib.androidxviewmodel
 }
