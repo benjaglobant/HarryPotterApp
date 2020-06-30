@@ -14,14 +14,14 @@ class SplashViewModel : ViewModel(), SplashContract.ViewModel {
     override fun getSplashStateLiveData(): LiveData<SplashState> = splashStateMutableLiveData
 
     override fun startTimer() = viewModelScope.launch {
-        delay(TIME)
+        delay(SPLASH_TIME)
         splashStateMutableLiveData.postValue(SplashState.START)
-        delay(TIME)
+        delay(SPLASH_TIME)
         splashStateMutableLiveData.postValue(SplashState.FINISH)
     }
 
     companion object {
-        const val TIME = 2000L
+        private const val SPLASH_TIME = 2000L
     }
 }
 

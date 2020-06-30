@@ -1,6 +1,5 @@
 package com.globant.harrypotterapp.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.globant.harrypotterapp.databinding.ActivitySplashBinding
@@ -24,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
         when (state) {
             SplashState.START -> binding.logo.performClick()
             SplashState.FINISH -> {
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                startActivity(MainActivity.getIntent(this))
                 finish()
             }
         }
