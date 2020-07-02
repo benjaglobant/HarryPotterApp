@@ -13,6 +13,8 @@ ext {
     mockitokotlin2 = "2.2.0"
     mockitocore = "2.28.2"
     mockitoinline = "2.21.0"
+    recyclerview = "1.1.0"
+    cardview = "1.0.0"
 
     generalDependencies = [
             kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin}",
@@ -29,5 +31,7 @@ ext {
             mockitokotlin2          : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitokotlin2}",
             mockitocore             : "org.mockito:mockito-core:${mockitocore}",
             mockitoinline           : "org.mockito:mockito-inline:${mockitoinline}",
+            recyclerview            : "androidx.recyclerview:recyclerview:${recyclerview}",
+            cardview                : "androidx.cardview:cardview:${cardview}"
     ]
 }
