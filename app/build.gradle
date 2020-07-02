@@ -51,4 +51,6 @@ dependencies {
     testImplementation lib.mockitocore
     testImplementation lib.mockitoinline
     testImplementation lib.junit
+    implementation lib.recyclerview
+    implementation lib.cardview
 }
