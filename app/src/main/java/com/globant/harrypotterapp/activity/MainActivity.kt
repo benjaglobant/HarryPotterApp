@@ -1,6 +1,6 @@
 package com.globant.harrypotterapp.activity
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun getIntent(activity: Activity): Intent = Intent(activity, MainActivity::class.java)
+        fun getIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
 }

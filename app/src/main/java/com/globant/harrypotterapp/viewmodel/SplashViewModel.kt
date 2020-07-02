@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.harrypotterapp.contract.SplashContract
+import com.globant.harrypotterapp.viewmodel.contract.SplashContract
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

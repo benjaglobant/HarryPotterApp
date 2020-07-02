@@ -1,7 +1,7 @@
 package com.globant.harrypotterapp.splashtest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.globant.harrypotterapp.contract.SplashContract
+import com.globant.harrypotterapp.viewmodel.contract.SplashContract
 import com.globant.harrypotterapp.viewmodel.SplashState
 import com.globant.harrypotterapp.viewmodel.SplashViewModel
 import kotlinx.coroutines.Dispatchers
