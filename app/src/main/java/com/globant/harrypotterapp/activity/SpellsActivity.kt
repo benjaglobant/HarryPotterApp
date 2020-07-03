@@ -5,12 +5,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.domain.entity.Spell
 import com.globant.harrypotterapp.adapter.SpellsAdapter
 import com.globant.harrypotterapp.databinding.ActivitySpellsBinding
-import com.globant.harrypotterapp.viewmodel.SpellsData
-import com.globant.harrypotterapp.viewmodel.SpellsState
+import com.globant.harrypotterapp.util.Data
+import com.globant.harrypotterapp.util.Event
+import com.globant.harrypotterapp.util.Status
 import com.globant.harrypotterapp.viewmodel.SpellsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,18 +30,24 @@ class SpellsActivity : AppCompatActivity() {
         spellsViewModel.fetchSpells()
     }
 
-    private fun updateUI(spells: SpellsData) {
-        when (spells.state) {
-            SpellsState.SHOW_LOADER -> binding.spellsActivityLoader.visibility = View.VISIBLE
-            SpellsState.SHOW_DATA -> spells.data?.listOfSpells?.let { showSpellsData(it) }
+    private fun updateUI(data: Event<Data<List<Spell>>>) {
+        when (data.peekContent().status) {
+            Status.LOADING -> binding.spellsActivityLoader.visibility = View.VISIBLE
+            Status.SUCCESS -> showSpellsData(data.peekContent().data)
+            Status.ERROR -> showSpellsError(data.peekContent().error?.message)
         }
     }
 
-    private fun showSpellsData(spells: List<Spell>) {
+    private fun showSpellsData(spells: List<Spell>?) {
         binding.spellsActivityLoader.visibility = View.GONE
-        spellsAdapter.submitList(spells)
+        spells?.let { spellsAdapter.submitList(it) }
         binding.spellsActivityRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.spellsActivityRecyclerView.adapter = spellsAdapter
+    }
+
+    private fun showSpellsError(error: String?) {
+        binding.spellsActivityLoader.visibility = View.GONE
+        error?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
     }
 
     companion object {

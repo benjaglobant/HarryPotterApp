@@ -4,28 +4,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.harrypotterapp.ListOfSpellsMocked
+import com.globant.domain.entity.Spell
+import com.globant.domain.usecase.GetSpellsFromAPIUseCase
+import com.globant.domain.util.Result
+import com.globant.harrypotterapp.util.Data
+import com.globant.harrypotterapp.util.Event
+import com.globant.harrypotterapp.util.Status
 import com.globant.harrypotterapp.viewmodel.contract.SpellsContract
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SpellsViewModel : ViewModel(), SpellsContract.ViewModel {
+class SpellsViewModel(private val getSpellsFromAPIUseCase: GetSpellsFromAPIUseCase) : ViewModel(), SpellsContract.ViewModel {
 
-    private val spellsMutableLiveData = MutableLiveData<SpellsData>()
-    override fun getSpellsLiveData(): LiveData<SpellsData> = spellsMutableLiveData
+    private val spellsMutableLiveData = MutableLiveData<Event<Data<List<Spell>>>>()
+    override fun getSpellsLiveData(): LiveData<Event<Data<List<Spell>>>> = spellsMutableLiveData
 
     override fun fetchSpells() = viewModelScope.launch {
-
-        spellsMutableLiveData.value = SpellsData(SpellsState.SHOW_LOADER)
-        delay(LOADER_TIME)
-        spellsMutableLiveData.value = SpellsData(SpellsState.SHOW_DATA, ListOfSpellsMocked())
-        // TODO: Implement this method using use cases for fetch spells from API
-    }
-
-    companion object {
-        private const val LOADER_TIME = 1500L
+        spellsMutableLiveData.postValue(Event(Data(status = Status.LOADING)))
+        withContext(Dispatchers.IO) { getSpellsFromAPIUseCase.invoke() }.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    spellsMutableLiveData.postValue(Event(Data(status = Status.SUCCESS, data = result.data)))
+                }
+                is Result.Failure -> {
+                    spellsMutableLiveData.postValue(Event(Data(status = Status.ERROR, error = result.exception)))
+                }
+            }
+        }
     }
 }
-
-data class SpellsData(val state: SpellsState, val data: ListOfSpellsMocked? = null)
-enum class SpellsState { SHOW_LOADER, SHOW_DATA }
