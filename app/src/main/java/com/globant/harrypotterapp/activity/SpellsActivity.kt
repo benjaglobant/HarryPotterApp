@@ -31,10 +31,11 @@ class SpellsActivity : AppCompatActivity() {
     }
 
     private fun updateUI(data: Event<Data<List<Spell>>>) {
-        when (data.peekContent().status) {
+        val spellsData = data.getContentIfNotHandled()
+        when (spellsData?.status) {
             Status.LOADING -> binding.spellsActivityLoader.visibility = View.VISIBLE
-            Status.SUCCESS -> showSpellsData(data.peekContent().data)
-            Status.ERROR -> showSpellsError(data.peekContent().error?.message)
+            Status.SUCCESS -> showSpellsData(spellsData.data)
+            Status.ERROR -> showSpellsError(spellsData.error?.message)
         }
     }
 

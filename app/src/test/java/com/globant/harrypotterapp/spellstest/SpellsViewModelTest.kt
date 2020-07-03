@@ -36,7 +36,13 @@ class SpellsViewModelTest {
     val taskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var spellsViewModel: SpellsContract.ViewModel
-    private var mockedGetSpellsFromApiUseCase: GetSpellsFromAPIUseCase = mock()
+    private val mockedGetSpellsFromApiUseCase: GetSpellsFromAPIUseCase = mock()
+    private val successResult: Result.Success<List<Spell>> = mock()
+    private val listOfSpells: List<Spell> = mock()
+    private val successResponseList = listOf(
+        Data(status = Status.LOADING),
+        Data(status = Status.SUCCESS, data = listOfSpells)
+    )
 
     @Before
     fun setUp() {
@@ -55,10 +61,11 @@ class SpellsViewModelTest {
         val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
         val failureResult: Result.Failure = mock()
         val exception: Exception = mock()
-        val responseList = listOf(
+        val errorResponseList = listOf(
             Data(status = Status.LOADING, data = null, error = null),
             Data(status = Status.ERROR, data = null, error = exception)
         )
+
         whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(failureResult)
         whenever(failureResult.exception).thenReturn(exception)
         runBlocking {
@@ -67,20 +74,14 @@ class SpellsViewModelTest {
 
         verify(mockedGetSpellsFromApiUseCase).invoke()
 
-        assertEquals(responseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(responseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(responseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
+        assertEquals(errorResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
+        assertEquals(errorResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
+        assertEquals(errorResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
     }
 
     @Test
     fun `when fetchSpells returns a success result`() {
         val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
-        val successResult: Result.Success<List<Spell>> = mock()
-        val listOfSpells: List<Spell> = mock()
-        val responseList = listOf(
-            Data(status = Status.LOADING, data = null, error = null),
-            Data(status = Status.SUCCESS, data = listOfSpells, error = null)
-        )
 
         whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(successResult)
         whenever(successResult.data).thenReturn(listOfSpells)
@@ -90,9 +91,31 @@ class SpellsViewModelTest {
 
         verify(mockedGetSpellsFromApiUseCase).invoke()
 
-        assertEquals(responseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(responseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(responseList[ONE].data, spellsLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].data, spellsLiveData.observedValues[ONE]?.peekContent()?.data)
+    }
+
+    @Test
+    fun `trying to get data twice but get null in the second time`() {
+        val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
+
+        whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(successResult)
+        whenever(successResult.data).thenReturn(listOfSpells)
+
+        runBlocking {
+            spellsViewModel.fetchSpells().join()
+        }
+
+        verify(mockedGetSpellsFromApiUseCase).invoke()
+
+        val dataFirstTime = spellsLiveData.observedValues[ONE]?.getContentIfNotHandled()
+        assertEquals(successResponseList[ONE].status, dataFirstTime?.status)
+        assertEquals(successResponseList[ONE].data, dataFirstTime?.data)
+
+        val dataSecondTime = spellsLiveData.observedValues[ONE]?.getContentIfNotHandled()
+        assertEquals(null, dataSecondTime?.data)
+        assertEquals(null, dataSecondTime?.status)
     }
 
     companion object {

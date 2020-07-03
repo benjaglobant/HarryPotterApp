@@ -7,5 +7,5 @@
     <dimen name="spells_activity_card_view_margin_horizontal">15dp</dimen>
     <dimen name="spells_activity_card_view_corner_radius">10dp</dimen>
     <dimen name="spells_activity_card_view_text_view_margin_top">5dp</dimen>
-    <dimen name="spells_activity_card_view_text_view_text_size">30sp</dimen>
+    <dimen name="spells_activity_card_view_text_view_text_size">36sp</dimen>
 </resources>
