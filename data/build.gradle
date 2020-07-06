@@ -35,4 +35,6 @@ dependencies {
     implementation lib.kotlin
     implementation lib.appcompat
     implementation lib.corektx
+    implementation lib.retrofit
+    implementation lib.retrofitgson
 }

@@ -31,4 +31,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
+
+    def lib = rootProject.ext.generalDependencies
+    implementation lib.koinviewmodel
 }

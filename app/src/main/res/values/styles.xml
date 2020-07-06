@@ -32,6 +32,7 @@
         <item name="android:layout_marginTop">@dimen/spells_activity_card_view_text_view_margin_top</item>
         <item name="android:textSize">@dimen/spells_activity_card_view_text_view_text_size</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/harry_potter</item>
     </style>
 </resources>
