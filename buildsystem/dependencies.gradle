@@ -16,6 +16,8 @@ ext {
     recyclerview = "1.1.0"
     cardview = "1.0.0"
     retrofit = "2.0.0"
+    roomversion = "2.2.5"
+    stethoversion = "1.5.1"
 
     generalDependencies = [
             kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin}",
@@ -35,6 +37,10 @@ ext {
             recyclerview            : "androidx.recyclerview:recyclerview:${recyclerview}",
             cardview                : "androidx.cardview:cardview:${cardview}",
             retrofit                : "com.squareup.retrofit2:retrofit:${retrofit}",
-            retrofitgson            : "com.squareup.retrofit2:converter-gson:${retrofit}"
+            retrofitgson            : "com.squareup.retrofit2:converter-gson:${retrofit}",
+            roomruntime             : "androidx.room:room-runtime:${roomversion}",
+            roomcompiler            : "androidx.room:room-compiler:${roomversion}",
+            roomktx                 : "androidx.room:room-ktx:${roomversion}",
+            stetho                  : "com.facebook.stetho:stetho:${stethoversion}"
     ]
 }

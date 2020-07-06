@@ -53,4 +53,5 @@ dependencies {
     testImplementation lib.junit
     implementation lib.recyclerview
     implementation lib.cardview
+    implementation lib.stetho
 }

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.domain.entity.Spell
 import com.globant.domain.usecase.GetSpellsFromAPIUseCase
+import com.globant.domain.usecase.GetSpellsFromDataBaseUseCase
+import com.globant.domain.usecase.UpdateSpellsDataBaseUseCase
 import com.globant.domain.util.Result
 import com.globant.harrypotterapp.util.Data
 import com.globant.harrypotterapp.util.Event
@@ -15,7 +17,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SpellsViewModel(private val getSpellsFromAPIUseCase: GetSpellsFromAPIUseCase) : ViewModel(), SpellsContract.ViewModel {
+class SpellsViewModel(
+    private val getSpellsFromAPIUseCase: GetSpellsFromAPIUseCase,
+    private val getSpellsFromDataBaseUseCase: GetSpellsFromDataBaseUseCase,
+    private val updateSpellsDataBaseUseCase: UpdateSpellsDataBaseUseCase
+) : ViewModel(), SpellsContract.ViewModel {
 
     private val spellsMutableLiveData = MutableLiveData<Event<Data<List<Spell>>>>()
     override fun getSpellsLiveData(): LiveData<Event<Data<List<Spell>>>> = spellsMutableLiveData
@@ -25,10 +31,20 @@ class SpellsViewModel(private val getSpellsFromAPIUseCase: GetSpellsFromAPIUseCa
         withContext(Dispatchers.IO) { getSpellsFromAPIUseCase.invoke() }.let { result ->
             when (result) {
                 is Result.Success -> {
+                    withContext(Dispatchers.IO) { updateSpellsDataBaseUseCase.invoke(result.data) }
                     spellsMutableLiveData.postValue(Event(Data(status = Status.SUCCESS, data = result.data)))
                 }
                 is Result.Failure -> {
-                    spellsMutableLiveData.postValue(Event(Data(status = Status.ERROR, error = result.exception)))
+                    withContext(Dispatchers.Default) { getSpellsFromDataBaseUseCase.invoke() }.let { databaseResult ->
+                        when (databaseResult) {
+                            is Result.Success -> {
+                                spellsMutableLiveData.postValue(Event(Data(status = Status.SUCCESS, data = databaseResult.data)))
+                            }
+                            is Result.Failure -> {
+                                spellsMutableLiveData.postValue(Event(Data(status = Status.ERROR, error = databaseResult.exception)))
+                            }
+                        }
+                    }
                 }
             }
         }
