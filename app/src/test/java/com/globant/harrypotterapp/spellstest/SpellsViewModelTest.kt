@@ -3,6 +3,8 @@ package com.globant.harrypotterapp.spellstest
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.globant.domain.entity.Spell
 import com.globant.domain.usecase.GetSpellsFromAPIUseCase
+import com.globant.domain.usecase.GetSpellsFromDataBaseUseCase
+import com.globant.domain.usecase.UpdateSpellsDataBaseUseCase
 import com.globant.domain.util.Result
 import com.globant.harrypotterapp.util.Data
 import com.globant.harrypotterapp.util.Status
@@ -30,24 +32,33 @@ import java.lang.Exception
 @RunWith(MockitoJUnitRunner::class)
 class SpellsViewModelTest {
     @ObsoleteCoroutinesApi
-    private var mainThreadSurrogate = newSingleThreadContext(UI_THREAD)
+    private var mainThreadSurrogate = newSingleThreadContext(TEST_THREAD)
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var spellsViewModel: SpellsContract.ViewModel
     private val mockedGetSpellsFromApiUseCase: GetSpellsFromAPIUseCase = mock()
+    private val mockedGetSpellsFromDataBaseUseCase: GetSpellsFromDataBaseUseCase = mock()
+    private val mockedUpdateSpellsDataBaseUseCase: UpdateSpellsDataBaseUseCase = mock()
     private val successResult: Result.Success<List<Spell>> = mock()
+    private val failureResult: Result.Failure = mock()
+    private val exception: Exception = mock()
     private val listOfSpells: List<Spell> = mock()
     private val successResponseList = listOf(
         Data(status = Status.LOADING),
         Data(status = Status.SUCCESS, data = listOfSpells)
     )
+    private val errorResponseList = listOf(
+        Data(status = Status.LOADING),
+        Data(status = Status.ERROR, data = null, error = exception)
+    )
 
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
-        spellsViewModel = SpellsViewModel(mockedGetSpellsFromApiUseCase)
+        spellsViewModel =
+            SpellsViewModel(mockedGetSpellsFromApiUseCase, mockedGetSpellsFromDataBaseUseCase, mockedUpdateSpellsDataBaseUseCase)
     }
 
     @After
@@ -55,30 +66,6 @@ class SpellsViewModelTest {
         mainThreadSurrogate.close()
         Dispatchers.resetMain()
     }
-
-    @Test
-    fun `when fetchSpells returns a failure result`() {
-        val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
-        val failureResult: Result.Failure = mock()
-        val exception: Exception = mock()
-        val errorResponseList = listOf(
-            Data(status = Status.LOADING, data = null, error = null),
-            Data(status = Status.ERROR, data = null, error = exception)
-        )
-
-        whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(failureResult)
-        whenever(failureResult.exception).thenReturn(exception)
-        runBlocking {
-            spellsViewModel.fetchSpells().join()
-        }
-
-        verify(mockedGetSpellsFromApiUseCase).invoke()
-
-        assertEquals(errorResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
-    }
-
     @Test
     fun `when fetchSpells returns a success result`() {
         val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
@@ -118,8 +105,45 @@ class SpellsViewModelTest {
         assertEquals(null, dataSecondTime?.status)
     }
 
+    @Test
+    fun `on getting spells from API returns failure in result, then gets data from database`() {
+        val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
+        whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(failureResult)
+        whenever(mockedGetSpellsFromDataBaseUseCase.invoke()).thenReturn(successResult)
+        whenever(successResult.data).thenReturn(listOfSpells)
+
+        runBlocking {
+            spellsViewModel.fetchSpells().join()
+        }
+
+        verify(mockedGetSpellsFromApiUseCase).invoke()
+        verify(mockedGetSpellsFromDataBaseUseCase).invoke()
+
+        assertEquals(successResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].data, spellsLiveData.observedValues[ONE]?.peekContent()?.data)
+    }
+
+    @Test
+    fun `on getting spells from API returns failure in result, then database returns failure too`() {
+        val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
+        whenever(mockedGetSpellsFromApiUseCase.invoke()).thenReturn(failureResult)
+        whenever(mockedGetSpellsFromDataBaseUseCase.invoke()).thenReturn(failureResult)
+        whenever(failureResult.exception).thenReturn(exception)
+
+        runBlocking {
+            spellsViewModel.fetchSpells().join()
+        }
+
+        verify(mockedGetSpellsFromApiUseCase).invoke()
+        verify(mockedGetSpellsFromDataBaseUseCase).invoke()
+
+        assertEquals(errorResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
+        assertEquals(errorResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
+        assertEquals(errorResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
+    }
     companion object {
-        private const val UI_THREAD = "UI thread"
+        private const val TEST_THREAD = "testThread"
         private const val ZERO = 0
         private const val ONE = 1
     }
