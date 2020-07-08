@@ -11,7 +11,7 @@ class SpellsServiceImpl : SpellsService {
     private val api = ServiceGenerator()
     private val mapper = SpellMapper()
 
-    override fun getSpellsFromAPI(): Result<List<Spell>> {
+    override fun getSpells(): Result<List<Spell>> {
         try {
             val callResponse = api.createService(HarryPotterApi::class.java).getSpells()
             val response = callResponse.execute()
