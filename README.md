@@ -3,7 +3,6 @@
 
 ### Kotlin + MVVM + Clean Architecture + Koin + Coroutines + Room
 
-This project was part of an Android Onboarding Tandil's exercise where the people who made this would use every the tecnologies that learned during this onboarding and some more that learn making this exercise.
 To do the project Kotlin was used as a programming language and MVVM (Model - View - ViewModel) as software architectural patter.
 
 ### MVVM (Model - View - ViewModel):
