@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.globant.data.mapper.SpellDataBaseMapper
 import com.globant.domain.database.HarryPotterRoomDataBase
 import com.globant.domain.entity.Spell
-import com.globant.domain.entity.SpellRoom
+import com.globant.data.entity.SpellRoom
 import com.globant.domain.util.Result
 import java.lang.Exception
 

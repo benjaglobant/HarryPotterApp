@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globant.domain.entity.SpellRoom
+import com.globant.data.entity.SpellRoom
 
 @Dao
 interface HarryPotterRoomDao {
