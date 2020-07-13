@@ -12,7 +12,7 @@ Moreover, MVVM is vastly used in today’s Android development, and combines ver
  - View: The view in our implementation of MVVM is actually a **Fragment or an Activity**. The views enclose everything needed to **handle the user interface**. **They observe the ViewModel**, using LiveData components, **and react to its changes as they need to**.
  - ViewModel: The **responsable of the relationship between the data and the user interface of the application**. The ViewModel **has the logic to convert what the use cases provide into information that the view can understand and present**. Furthermore, it **has the responsability and the logic to react to the user’s input, and call the necessary use cases**. The most useful of the Android’s ViewModel class is its lifecycle consciousness. It only **communicates to the View with LiveData components, so it does not need a reference to a contexts or an activity**: it can keep the information alive even against configuration changes like screen rotations or calls to background.
 
-![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/spells-feature/mvvm.png "MVVM")
+![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/mvvm.png "MVVM")
 
 If you want to read and understad at all MVVM, just visit: https://docs.google.com/presentation/d/1JkepsjABKhOmQr7bc62mL8vd-3UqbyklceHfJn4K0rU/edit?ts=5daa0000#slide=id.g61baf37ef4_1_33
 
@@ -25,7 +25,7 @@ Layers of Clean Architecture used in this project:
  - Data: Would **dispense the required data** for the application to the domain layer by **implementing interface exposed by the domain**.
  - Presentation: Would **include both domain and data layer** and is android specific which **executes the UI logic**.
  
- ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/spells-feature/cleanarchitecture.png "CleanArchitecture")
+ ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/cleanarchitecture.png "CleanArchitecture")
 
 To learn about different ways of implement Clean Architecture, visit: https://docs.google.com/presentation/d/1aBtccGraTyggnIP6Nn7m8uGfBgreKWIk-2JuLafKAds/edit#slide=id.p4
 
@@ -74,8 +74,8 @@ There are 3 major components in Room:
    - Include the list of **entities associated** with the database within the annotation.
    - Contain an **abstract method that has 0 arguments and returns the class that is annotated with @Dao**.
  - Entity: **Represents a table** within the database.
- - DAO: **Data Access Object**, contains the methods used for accessing the database.
- ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/spells-feature/roomdatabase.png "Room Database")
+ - DAO: **Data Access Object**, contains the methods used for accessing the database.  
+ ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/roomdatabase.png "Room Database")
  If you want to know how to implement a database using Room in your project, visit:  
 https://developer.android.com/training/data-storage/room/index.html
  
