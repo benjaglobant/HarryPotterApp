@@ -1,4 +1,4 @@
-package com.globant.harrypotterapp.contract
+package com.globant.harrypotterapp.viewmodel.contract
 
 import androidx.lifecycle.LiveData
 import com.globant.harrypotterapp.viewmodel.SplashState
