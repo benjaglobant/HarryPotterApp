@@ -1,7 +1,7 @@
 package com.globant.data.mapper
 
 import com.globant.domain.entity.Spell
-import com.globant.domain.entity.SpellRoom
+import com.globant.data.entity.SpellRoom
 
 class SpellDataBaseMapper : BaseMapper<SpellRoom, Spell> {
 
