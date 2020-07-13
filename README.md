@@ -12,9 +12,7 @@ Moreover, MVVM is vastly used in today’s Android development, and combines ver
  - View: The view in our implementation of MVVM is actually a **Fragment or an Activity**. The views enclose everything needed to **handle the user interface**. **They observe the ViewModel**, using LiveData components, **and react to its changes as they need to**.
  - ViewModel: The **responsable of the relationship between the data and the user interface of the application**. The ViewModel **has the logic to convert what the use cases provide into information that the view can understand and present**. Furthermore, it **has the responsability and the logic to react to the user’s input, and call the necessary use cases**. The most useful of the Android’s ViewModel class is its lifecycle consciousness. It only **communicates to the View with LiveData components, so it does not need a reference to a contexts or an activity**: it can keep the information alive even against configuration changes like screen rotations or calls to background.
 
-<p align="center">
-  <img src="https://koenig-media.raywenderlich.com/uploads/2019/02/MVVM.png" width="500" title="MVVM diagram"/>
-</p>
+![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/mvvm.png"MVVM")
 
 If you want to read and understad at all MVVM, just visit: https://docs.google.com/presentation/d/1JkepsjABKhOmQr7bc62mL8vd-3UqbyklceHfJn4K0rU/edit?ts=5daa0000#slide=id.g61baf37ef4_1_33
 
@@ -27,14 +25,12 @@ Layers of Clean Architecture used in this project:
  - Data: Would **dispense the required data** for the application to the domain layer by **implementing interface exposed by the domain**.
  - Presentation: Would **include both domain and data layer** and is android specific which **executes the UI logic**.
  
- <p align="center">
-  <img src="https://miro.medium.com/max/700/1*jH0iI7-MSQYgLUrqTUm6mg.png" width="500" title="clean architecture layer rings">
-</p>
+ ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/cleanarchitecture.png"CleanArchitecture")
 
 To learn about different ways of implement Clean Architecture, visit: https://docs.google.com/presentation/d/1aBtccGraTyggnIP6Nn7m8uGfBgreKWIk-2JuLafKAds/edit#slide=id.p4
 
 ### Dependency Injection - Koin
- - Dependency injection is a programming **technique that makes a class independent of its dependencies by decoupling the usage of an object from its creation**. It’s derived from the fifth principle of the famous object oriented programming principles S.O.L.I.D (class should concentrate on fulfilling its own responsibilities and should not be concerned with creating objects to fulfill those responsibilities).
+ - Dependency injection is a programming **technique that makes a class independent of its dependencies by decoupling the usage of an object from its creation**. It’s derived from the fifth principle of the famous object oriented programming principles S.O.L.I.D (**Dependency Inversion**: class should concentrate on fulfilling its own responsibilities and should not be concerned with creating objects to fulfill those responsibilities).
   This layer was implemented using Koin, that is a lightweight dependency injection framework written purely in Kotlin that uses neither code generation, nor proxies, nor reflections.
 
 1) Declare a module: Defines those **classes which will be injected** at some point in the app.
@@ -79,9 +75,7 @@ There are 3 major components in Room:
    - Contain an **abstract method that has 0 arguments and returns the class that is annotated with @Dao**.
  - Entity: **Represents a table** within the database.
  - DAO: **Data Access Object**, contains the methods used for accessing the database.
- <p align="center">
-   <img src="https://developer.android.com/images/training/data-storage/room_architecture.png" width="400" title="room database"/>
- </p>
+ ![alt text](https://github.com/benjaglobant/HarryPotterApp/blob/master/roomdatabase.png"Room Database")
  If you want to know how to implement a database using Room in your project, visit:  
 https://developer.android.com/training/data-storage/room/index.html
  
