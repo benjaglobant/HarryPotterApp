@@ -11,13 +11,13 @@ class HouseServiceImpl : HouseService {
     private val api = ServiceGenerator()
     private val mapper = HouseMapper()
 
-    override fun getHousesId(): Result<List<House>> {
+    override fun getHouses(): Result<List<House>> {
         try {
-            val callResponse = api.createService(HarryPotterApi::class.java).getHousesId()
+            val callResponse = api.createService(HarryPotterApi::class.java).getHouses()
             val response = callResponse.execute()
             if (response.isSuccessful)
                 response.body()?.let {
-                    mapper.transformListOfHouseId(it)
+                    mapper.transformListOfHouse(it)
                 }?.let {
                     return Result.Success(it)
                 }
@@ -28,6 +28,6 @@ class HouseServiceImpl : HouseService {
     }
 
     companion object {
-        private const val NOT_FOUND = "HousesId not found"
+        private const val NOT_FOUND = "Houses not found"
     }
 }

@@ -64,13 +64,13 @@ class MainViewModelTest {
             Data(status = Status.SUCCESS, data = listOfHouses)
         )
 
-        whenever(mockedHouseService.getHousesId()).thenReturn(successResult)
+        whenever(mockedHouseService.getHouses()).thenReturn(successResult)
         whenever(successResult.data).thenReturn(listOfHouses)
         runBlocking {
             mainViewModel.fetchHouses().join()
         }
 
-        verify(mockedHouseService).getHousesId()
+        verify(mockedHouseService).getHouses()
 
         assertEquals(successResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
         assertEquals(successResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)
@@ -87,13 +87,13 @@ class MainViewModelTest {
             Data(status = Status.ERROR, data = null, error = exception)
         )
 
-        whenever(mockedHouseService.getHousesId()).thenReturn(failureResult)
+        whenever(mockedHouseService.getHouses()).thenReturn(failureResult)
         whenever(failureResult.exception).thenReturn(exception)
         runBlocking {
             mainViewModel.fetchHouses().join()
         }
 
-        verify(mockedHouseService).getHousesId()
+        verify(mockedHouseService).getHouses()
 
         assertEquals(errorResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
         assertEquals(errorResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)

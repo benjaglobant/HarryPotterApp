@@ -10,5 +10,5 @@ interface HarryPotterApi {
     fun getSpells(): Call<List<SpellResponse>>
 
     @GET("v1/houses")
-    fun getHousesId(): Call<List<HouseResponse>>
+    fun getHouses(): Call<List<HouseResponse>>
 }

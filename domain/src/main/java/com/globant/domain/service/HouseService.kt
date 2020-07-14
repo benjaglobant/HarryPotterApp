@@ -4,5 +4,5 @@ import com.globant.domain.entity.House
 import com.globant.domain.util.Result
 
 interface HouseService {
-    fun getHousesId(): Result<List<House>>
+    fun getHouses(): Result<List<House>>
 }

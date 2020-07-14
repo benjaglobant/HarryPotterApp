@@ -7,5 +7,5 @@ import com.globant.domain.util.Result
 
 class GetHousesUseCaseImpl(private val houseService: HouseService) : GetHousesUseCase {
     override operator fun invoke(): Result<List<House>> =
-        houseService.getHousesId()
+        houseService.getHouses()
 }
