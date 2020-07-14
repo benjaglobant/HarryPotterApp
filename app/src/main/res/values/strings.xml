@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HarryPotterApp</string>
+    <string name="house_detail_tab">House Detail</string>
+    <string name="characters_tab">Characters</string>
 </resources>

@@ -8,4 +8,5 @@
     <dimen name="spells_activity_card_view_corner_radius">10dp</dimen>
     <dimen name="spells_activity_card_view_text_view_margin_top">5dp</dimen>
     <dimen name="spells_activity_card_view_text_view_text_size">36sp</dimen>
+    <dimen name="activity_house_app_bar_title_text_size">38sp</dimen>
 </resources>

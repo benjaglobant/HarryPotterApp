@@ -54,4 +54,7 @@ dependencies {
     implementation lib.recyclerview
     implementation lib.cardview
     implementation lib.stetho
+    implementation lib.viewpager2
+    implementation lib.tablayout
+    implementation lib.material
 }

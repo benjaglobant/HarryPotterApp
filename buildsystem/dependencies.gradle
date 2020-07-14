@@ -18,6 +18,9 @@ ext {
     retrofit = "2.0.0"
     roomversion = "2.2.5"
     stethoversion = "1.5.1"
+    viewpager2 = "1.0.0"
+    tablayout = "1.2.0-alpha04"
+    material = "1.1.0"
 
     generalDependencies = [
             kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin}",
@@ -41,6 +44,9 @@ ext {
             roomruntime             : "androidx.room:room-runtime:${roomversion}",
             roomcompiler            : "androidx.room:room-compiler:${roomversion}",
             roomktx                 : "androidx.room:room-ktx:${roomversion}",
-            stetho                  : "com.facebook.stetho:stetho:${stethoversion}"
+            stetho                  : "com.facebook.stetho:stetho:${stethoversion}",
+            viewpager2              : "androidx.viewpager2:viewpager2:${viewpager2}",
+            tablayout               : "com.google.android.material:material:${tablayout}",
+            material                : "com.google.android.material:material:${material}"
     ]
 }
