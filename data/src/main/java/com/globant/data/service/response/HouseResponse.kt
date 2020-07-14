@@ -1,6 +1,6 @@
 package com.globant.data.service.response
 
-data class HouseIdResponse(
+data class HouseResponse(
     val _id: String,
     val name: String
 )

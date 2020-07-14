@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setOnClickListeners()
-        mainViewModel.fetchHousesIds()
+        mainViewModel.fetchHouses()
         // TODO: observe and react to this Job, and use de fetched data
     }
 

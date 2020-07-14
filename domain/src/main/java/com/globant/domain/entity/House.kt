@@ -1,6 +1,6 @@
 package com.globant.domain.entity
 
-data class HouseId(
+data class House(
     private val id: String,
     private val name: String
 )
