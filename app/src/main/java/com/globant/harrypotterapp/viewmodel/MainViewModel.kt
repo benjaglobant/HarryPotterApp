@@ -22,6 +22,7 @@ class MainViewModel(private val getHousesUseCase: GetHousesUseCase) : ViewModel(
     override fun getHousesLiveData(): LiveData<Event<Data<List<House>>>> = housesMutableLiveData
 
     override fun fetchHouses(): Job = viewModelScope.launch {
+        housesMutableLiveData.postValue(Event(Data(status = Status.LOADING)))
         withContext(Dispatchers.IO) { getHousesUseCase() }.let { result ->
             when (result) {
                 is Result.Success -> {
