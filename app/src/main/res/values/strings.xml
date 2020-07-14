@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">HarryPotterApp</string>
+    <string name="house_detail_tab">House Detail</string>
+    <string name="characters_tab">Characters</string>
+    <string name="house_detail_fragment_text">HOUSE DETAIL FRAGMENT</string>
+    <string name="house_characters_fragment_text">HOUSE CHARACTERS FRAGMENT</string>
+    <string name="house_detail_fragment_name_text">Name: %1$s</string>
+    <string name="house_detail_fragment_mascot_text">Mascot:  %1$s</string>
+    <string name="house_detail_fragment_head_of_house_text">Director:  %1$s</string>
+    <string name="house_detail_fragment_ghost_text">Ghost:  %1$s</string>
+    <string name="house_detail_fragment_founder_text">Founder:  %1$s</string>
+    <string name="house_detail_fragment_error_message">Error: House details not found</string>
 </resources>

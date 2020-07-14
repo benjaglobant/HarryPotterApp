@@ -2,9 +2,60 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="style_main_activity_base_button">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginStart">@dimen/main_activity_button_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/main_activity_button_margin_horizontal</item>
+    </style>
+
+    <style name="style_base_text_view">
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/harry_potter</item>
+    </style>
+
+    <style name="style_main_activity_button_margin_top" parent="style_main_activity_base_button">
+        <item name="android:layout_marginTop">@dimen/main_activity_button_margin_vertical</item>
+    </style>
+
+    <style name="style_main_activity_button_margin_bottom" parent="style_main_activity_base_button">
+        <item name="android:layout_marginBottom">@dimen/main_activity_button_margin_vertical</item>
+    </style>
+
+    <style name="style_spells_activity_card_view">
+        <item name="android:layout_marginTop">@dimen/spells_activity_card_view_margin_top</item>
+        <item name="android:layout_marginHorizontal">@dimen/spells_activity_card_view_margin_horizontal</item>
+        <item name="alpha">0.9</item>
+        <item name="cardCornerRadius">@dimen/spells_activity_card_view_corner_radius</item>
+    </style>
+
+    <style name="style_spells_activity_card_view_text_view" parent="@style/style_base_text_view">
+        <item name="android:layout_marginTop">@dimen/spells_activity_card_view_text_view_margin_top</item>
+        <item name="android:textSize">@dimen/spells_activity_card_view_text_view_text_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/harry_potter</item>
+    </style>
+
+    <style name="style_activity_house_app_bar_title" parent="style_base_text_view">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/activity_house_app_bar_title_margin_top</item>
+        <item name="android:textSize">@dimen/activity_house_app_bar_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="style_activity_house_tab" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/activity_house_tab_text_size</item>
+    </style>
+
+    <style name="style_house_detail_fragment_text_view" parent="style_base_text_view">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/house_detail_fragment_text_size</item>
+        <item name="android:layout_marginTop">@dimen/house_detail_fragment_view_margin_top</item>
     </style>
 
 </resources>

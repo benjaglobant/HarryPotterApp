@@ -22,16 +22,38 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
+
+preBuild.dependsOn ktlint
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation project(path: ':domain')
+    implementation project(path: ':di')
+
+    def lib = rootProject.ext.generalDependencies
+    implementation lib.kotlin
+    implementation lib.appcompat
+    implementation lib.corektx
+    implementation lib.constraintlayout
+    implementation lib.coroutines
+    implementation lib.koinviewmodel
+    implementation lib.androidxlifecycle
+    implementation lib.androidxviewmodel
+    testImplementation lib.kotlinxcoroutinestest
+    testImplementation lib.coretest
+    testImplementation lib.mockitokotlin2
+    testImplementation lib.mockitocore
+    testImplementation lib.mockitoinline
+    testImplementation lib.junit
+    implementation lib.recyclerview
+    implementation lib.cardview
+    implementation lib.stetho
+    implementation lib.viewpager2
+    implementation lib.tablayout
 }
