@@ -12,7 +12,7 @@ interface HarryPotterRoomDao {
     @Query("SELECT * FROM spells_table")
     fun getSpells(): List<SpellRoom>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSpell(spell: SpellRoom)
 
     @Query("SELECT * FROM house_table WHERE name = :name")

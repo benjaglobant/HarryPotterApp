@@ -10,6 +10,7 @@ class GetHousesUseCaseImpl(
     private val houseService: HouseService,
     private val database: HarryPotterRoomDataBase
 ) : GetHousesUseCase {
+
     override operator fun invoke(): Result<List<House>> =
         when (val result = houseService.getHouses()) {
             is Result.Success -> {
