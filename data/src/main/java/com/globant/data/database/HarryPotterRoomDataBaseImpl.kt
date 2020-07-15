@@ -41,6 +41,7 @@ abstract class HarryPotterRoomDataBaseImpl : RoomDatabase(), HarryPotterRoomData
             } else {
                 Result.Failure(Exception(HOUSE_ERROR))
             }
+            // THIS METHOD WILL BE USED TO GET THE HOUSE FROM THE DATABASE BY A NAME PASSED
         }
 
     override fun updateHouses(houses: List<House>) {
