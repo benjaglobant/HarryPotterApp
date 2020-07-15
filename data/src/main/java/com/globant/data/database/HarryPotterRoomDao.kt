@@ -18,6 +18,6 @@ interface HarryPotterRoomDao {
     @Query("SELECT * FROM house_table WHERE name = :name")
     fun getHouseByName(name: String): List<HouseRoom>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHouse(house: HouseRoom)
 }
