@@ -1,6 +1,7 @@
 package com.globant.harrypotterapp.maintest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.globant.domain.database.HarryPotterRoomDataBase
 import com.globant.domain.entity.House
 import com.globant.domain.service.HouseService
 import com.globant.domain.usecase.GetHousesUseCase
@@ -40,11 +41,12 @@ class MainViewModelTest {
     private lateinit var mainViewModel: MainContract.ViewModel
     private lateinit var getHousesUseCase: GetHousesUseCase
     private val mockedHouseService: HouseService = mock()
+    private val mockedDataBase: HarryPotterRoomDataBase = mock()
 
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
-        getHousesUseCase = GetHousesUseCaseImpl(mockedHouseService)
+        getHousesUseCase = GetHousesUseCaseImpl(mockedHouseService, mockedDataBase)
         mainViewModel = MainViewModel(getHousesUseCase)
     }
 
@@ -71,6 +73,7 @@ class MainViewModelTest {
         }
 
         verify(mockedHouseService).getHouses()
+        verify(mockedDataBase).updateHouses(listOfHouses)
 
         assertEquals(successResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
         assertEquals(successResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)
