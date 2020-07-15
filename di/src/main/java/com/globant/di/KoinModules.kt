@@ -25,7 +25,7 @@ val databaseModule = module {
 
 val useCaseModule = module {
     single<GetSpellsUseCase> { GetSpellsUseCaseImpl(get(), get()) }
-    single<GetHousesUseCase> { GetHousesUseCaseImpl(get()) }
+    single<GetHousesUseCase> { GetHousesUseCaseImpl(get(), get()) }
 }
 
 private const val DATA_BASE_NAME = "HarryPotterDatabase"
