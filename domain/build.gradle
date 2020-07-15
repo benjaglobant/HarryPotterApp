@@ -6,6 +6,7 @@ dependencies {
     def lib = rootProject.ext.generalDependencies
     implementation lib.kotlin
     implementation lib.roomruntime
+    implementation lib.koinviewmodel
 }
 
 compileKotlin {
