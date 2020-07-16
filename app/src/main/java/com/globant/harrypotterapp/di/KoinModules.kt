@@ -1,5 +1,6 @@
 package com.globant.harrypotterapp.di
 
+import com.globant.harrypotterapp.viewmodel.HouseDetailViewModel
 import com.globant.harrypotterapp.viewmodel.MainViewModel
 import com.globant.harrypotterapp.viewmodel.SpellsViewModel
 import com.globant.harrypotterapp.viewmodel.SplashViewModel
@@ -10,4 +11,5 @@ val viewModelModule = module {
     viewModel { SplashViewModel() }
     viewModel { SpellsViewModel(get()) }
     viewModel { MainViewModel(get()) }
+    viewModel { HouseDetailViewModel() }
 }

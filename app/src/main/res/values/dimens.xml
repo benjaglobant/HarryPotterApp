@@ -10,4 +10,7 @@
     <dimen name="spells_activity_card_view_text_view_text_size">36sp</dimen>
     <dimen name="activity_house_app_bar_title_text_size">58sp</dimen>
     <dimen name="activity_house_tab_text_size">30sp</dimen>
+    <dimen name="activity_house_app_bar_title_margin_top">10dp</dimen>
+    <dimen name="house_detail_fragment_text_size">35sp</dimen>
+    <dimen name="house_detail_fragment_view_margin_top">18dp</dimen>
 </resources>

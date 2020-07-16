@@ -10,7 +10,8 @@
         android:id="@+id/activity_house_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_light_gray">
 
         <TextView
             android:id="@+id/activity_house_app_bar_title"
@@ -22,6 +23,7 @@
             android:id="@+id/activity_house_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/color_gray"
             app:tabTextAppearance="@style/style_activity_house_tab"
             app:tabGravity="fill"
             app:tabMaxWidth="0dp"
