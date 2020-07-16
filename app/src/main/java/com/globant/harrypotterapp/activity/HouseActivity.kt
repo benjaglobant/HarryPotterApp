@@ -21,6 +21,10 @@ class HouseActivity : AppCompatActivity() {
         binding = ActivityHouseBinding.inflate(layoutInflater)
         setContentView(binding.root)
         houseName = intent.getStringExtra(HOUSE_NAME)
+        initUI()
+    }
+
+    private fun initUI() {
         binding.activityHouseAppBarTitle.text = houseName
         initViewPager()
     }
