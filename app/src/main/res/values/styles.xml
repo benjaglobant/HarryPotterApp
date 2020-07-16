@@ -51,4 +51,10 @@
         <item name="android:textSize">@dimen/activity_house_tab_text_size</item>
     </style>
 
+    <style name="style_house_detail_fragment_text_view" parent="style_base_text_view">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/house_detail_fragment_text_size</item>
+        <item name="android:layout_marginTop">@dimen/house_detail_fragment_view_margin_top</item>
+    </style>
+
 </resources>
