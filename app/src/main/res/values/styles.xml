@@ -13,6 +13,11 @@
         <item name="android:layout_marginEnd">@dimen/main_activity_button_margin_horizontal</item>
     </style>
 
+    <style name="style_base_text_view">
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/harry_potter</item>
+    </style>
+
     <style name="style_main_activity_button_margin_top" parent="style_main_activity_base_button">
         <item name="android:layout_marginTop">@dimen/main_activity_button_margin_vertical</item>
     </style>
@@ -28,11 +33,22 @@
         <item name="cardCornerRadius">@dimen/spells_activity_card_view_corner_radius</item>
     </style>
 
-    <style name="style_spells_activity_card_view_text_view">
+    <style name="style_spells_activity_card_view_text_view" parent="@style/style_base_text_view">
         <item name="android:layout_marginTop">@dimen/spells_activity_card_view_text_view_margin_top</item>
         <item name="android:textSize">@dimen/spells_activity_card_view_text_view_text_size</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/harry_potter</item>
     </style>
+
+    <style name="style_activity_house_app_bar_title" parent="style_base_text_view">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/activity_house_app_bar_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="style_activity_house_tab" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/activity_house_tab_text_size</item>
+    </style>
+
 </resources>

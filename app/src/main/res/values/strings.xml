@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HarryPotterApp</string>
+    <string name="house_detail_tab">House Detail</string>
+    <string name="characters_tab">Characters</string>
+    <string name="house_detail_fragment_text">HOUSE DETAIL FRAGMENT</string>
+    <string name="house_characters_fragment_text">HOUSE CHARACTERS FRAGMENT</string>
 </resources>
