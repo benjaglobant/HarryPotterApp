@@ -20,4 +20,7 @@ interface HarryPotterRoomDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHouse(house: HouseRoom)
+
+    @Query("SELECT * FROM house_table")
+    fun getHouses(): List<HouseRoom>
 }

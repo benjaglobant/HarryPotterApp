@@ -13,8 +13,8 @@ class HouseDataBaseMapper : BaseMapper<HouseRoom, House> {
 
     fun transformToData(house: House): HouseRoom = house.run {
         HouseRoom(
-            this.id,
-            this.name
+            this.name,
+            this.id
         )
     }
 
