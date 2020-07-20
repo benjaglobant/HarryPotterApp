@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.domain.entity.Spell
 import com.globant.harrypotterapp.adapter.SpellsAdapter
 import com.globant.harrypotterapp.databinding.ActivitySpellsBinding
-import com.globant.harrypotterapp.util.Data
 import com.globant.harrypotterapp.util.Event
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.SpellData
+import com.globant.harrypotterapp.viewmodel.SpellStatus
 import com.globant.harrypotterapp.viewmodel.SpellsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -30,12 +30,12 @@ class SpellsActivity : AppCompatActivity() {
         spellsViewModel.fetchSpells()
     }
 
-    private fun updateUI(data: Event<Data<List<Spell>>>) {
+    private fun updateUI(data: Event<SpellData<List<Spell>>>) {
         val spellsData = data.getContentIfNotHandled()
         when (spellsData?.status) {
-            Status.LOADING -> binding.spellsActivityLoader.visibility = View.VISIBLE
-            Status.SUCCESS -> showSpellsData(spellsData.data)
-            Status.ERROR -> showSpellsError(spellsData.error?.message)
+            SpellStatus.LOADING_SPELLS -> binding.spellsActivityLoader.visibility = View.VISIBLE
+            SpellStatus.SUCCESS_SPELLS -> showSpellsData(spellsData.data)
+            SpellStatus.ERROR_SPELLS -> showSpellsError(spellsData.error?.message)
         }
     }
 

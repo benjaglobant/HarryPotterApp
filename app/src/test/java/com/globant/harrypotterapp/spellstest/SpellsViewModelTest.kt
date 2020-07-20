@@ -7,8 +7,8 @@ import com.globant.domain.service.SpellsService
 import com.globant.domain.usecase.GetSpellsUseCase
 import com.globant.domain.usecase.implementation.GetSpellsUseCaseImpl
 import com.globant.domain.util.Result
-import com.globant.harrypotterapp.util.Data
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.SpellData
+import com.globant.harrypotterapp.viewmodel.SpellStatus
 import com.globant.harrypotterapp.viewmodel.SpellsViewModel
 import com.globant.harrypotterapp.viewmodel.contract.SpellsContract
 import com.nhaarman.mockitokotlin2.mock
@@ -46,12 +46,12 @@ class SpellsViewModelTest {
     private val exception: Exception = mock()
     private val listOfSpells: List<Spell> = mock()
     private val successResponseList = listOf(
-        Data(status = Status.LOADING),
-        Data(status = Status.SUCCESS, data = listOfSpells)
+        SpellData(status = SpellStatus.LOADING_SPELLS),
+        SpellData(status = SpellStatus.SUCCESS_SPELLS, data = listOfSpells)
     )
     private val errorResponseList = listOf(
-        Data(status = Status.LOADING),
-        Data(status = Status.ERROR, data = null, error = exception)
+        SpellData(status = SpellStatus.LOADING_SPELLS),
+        SpellData(status = SpellStatus.ERROR_SPELLS, data = null, error = exception)
     )
 
     @Before

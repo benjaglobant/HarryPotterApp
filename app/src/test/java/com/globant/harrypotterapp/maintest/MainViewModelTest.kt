@@ -7,8 +7,8 @@ import com.globant.domain.service.HouseService
 import com.globant.domain.usecase.GetHousesUseCase
 import com.globant.domain.usecase.implementation.GetHousesUseCaseImpl
 import com.globant.domain.util.Result
-import com.globant.harrypotterapp.util.Data
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.MainData
+import com.globant.harrypotterapp.viewmodel.MainStatus
 import com.globant.harrypotterapp.viewmodel.MainViewModel
 import com.globant.harrypotterapp.viewmodel.contract.MainContract
 import com.nhaarman.mockitokotlin2.mock
@@ -62,8 +62,8 @@ class MainViewModelTest {
         val successResult: Result.Success<List<House>> = mock()
         val listOfHouses: List<House> = mock()
         val successResponseList = listOf(
-            Data(status = Status.LOADING),
-            Data(status = Status.SUCCESS, data = listOfHouses)
+            MainData(status = MainStatus.LOADING_MAIN),
+            MainData(status = MainStatus.SUCCESS_MAIN, data = listOfHouses)
         )
 
         whenever(mockedHouseService.getHouses()).thenReturn(successResult)
@@ -86,8 +86,8 @@ class MainViewModelTest {
         val failureResult: Result.Failure = mock()
         val exception: Exception = mock()
         val errorResponseList = listOf(
-            Data(status = Status.LOADING),
-            Data(status = Status.ERROR, data = null, error = exception)
+            MainData(status = MainStatus.LOADING_MAIN),
+            MainData(status = MainStatus.ERROR_MAIN, data = null, error = exception)
         )
 
         whenever(mockedHouseService.getHouses()).thenReturn(failureResult)

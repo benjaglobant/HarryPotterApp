@@ -8,8 +8,8 @@ import com.globant.domain.service.HouseDetailService
 import com.globant.domain.usecase.GetHouseDetailByIdUseCase
 import com.globant.domain.usecase.implementation.GetHouseDetailByIdUseCaseImpl
 import com.globant.domain.util.Result
-import com.globant.harrypotterapp.util.Data
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.HouseDetailData
+import com.globant.harrypotterapp.viewmodel.HouseDetailStatus
 import com.globant.harrypotterapp.viewmodel.HouseDetailViewModel
 import com.globant.harrypotterapp.viewmodel.contract.HouseDetailContract
 import com.nhaarman.mockitokotlin2.mock
@@ -61,8 +61,8 @@ class HouseDetailViewModelTest {
         val houseDetailLiveData = houseDetailViewModel.getHouseDetailLiveData().testObserver()
         val listOfHouseDetail: List<HouseDetail> = mock()
         val successResponseList = listOf(
-            Data(status = Status.LOADING),
-            Data(status = Status.SUCCESS, data = listOfHouseDetail)
+            HouseDetailData(status = HouseDetailStatus.LOADING_HOUSE_DETAIL),
+            HouseDetailData(status = HouseDetailStatus.SUCCESS_HOUSE_DETAIL, data = listOfHouseDetail)
         )
 
         whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOf(House(GRYFFINDOR_ID, GRYFFINDOR))))
@@ -85,8 +85,8 @@ class HouseDetailViewModelTest {
         val houseDetailLiveData = houseDetailViewModel.getHouseDetailLiveData().testObserver()
         val exception: Exception = mock()
         val failureResponseList = listOf(
-            Data(status = Status.LOADING),
-            Data(status = Status.ERROR, data = null, error = exception)
+            HouseDetailData(status = HouseDetailStatus.LOADING_HOUSE_DETAIL),
+            HouseDetailData(status = HouseDetailStatus.ERROR_HOUSE_DETAIL, data = null, error = exception)
         )
 
         whenever(mockedDataBase.getHouseByName(WRONG_HOUSE_NAME)).thenReturn(Result.Failure(exception = exception))

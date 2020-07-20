@@ -9,9 +9,9 @@ import android.widget.Toast
 import com.globant.domain.entity.HouseDetail
 import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.FragmentHouseDetailBinding
-import com.globant.harrypotterapp.util.Data
 import com.globant.harrypotterapp.util.Event
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.HouseDetailData
+import com.globant.harrypotterapp.viewmodel.HouseDetailStatus
 import com.globant.harrypotterapp.viewmodel.HouseDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -29,12 +29,12 @@ class HouseDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         binding.root
 
-    private fun updateUI(data: Event<Data<List<HouseDetail>>>) {
+    private fun updateUI(data: Event<HouseDetailData<List<HouseDetail>>>) {
         val houseDetailData = data.getContentIfNotHandled()
         when (houseDetailData?.status) {
-            Status.LOADING -> binding.houseDetailFragmentLoader.visibility = View.VISIBLE
-            Status.SUCCESS -> showHouseDetailData(houseDetailData.data?.get(ZERO))
-            Status.ERROR -> showErrorMessage()
+            HouseDetailStatus.LOADING_HOUSE_DETAIL -> binding.houseDetailFragmentLoader.visibility = View.VISIBLE
+            HouseDetailStatus.SUCCESS_HOUSE_DETAIL -> showHouseDetailData(houseDetailData.data?.get(ZERO))
+            HouseDetailStatus.ERROR_HOUSE_DETAIL -> showErrorMessage()
         }
     }
 
@@ -51,11 +51,13 @@ class HouseDetailFragment : Fragment() {
                 RAVENCLAW -> binding.houseDetailFragmentImage.setImageResource(R.drawable.ravenclaw)
                 SLYTHERIN -> binding.houseDetailFragmentImage.setImageResource(R.drawable.slytherin)
                 HUFFLEPUFF -> binding.houseDetailFragmentImage.setImageResource(R.drawable.hufflepuff)
+                else -> showErrorMessage()
             }
         }
     }
 
     private fun showErrorMessage() {
+        binding.houseDetailFragmentLoader.visibility = View.GONE
         binding.houseDetailFragmentImage.setImageResource(R.drawable.hogwarts)
         Toast.makeText(this.context, getString(R.string.house_detail_fragment_error_message), Toast.LENGTH_SHORT).show()
     }
