@@ -15,9 +15,9 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -28,12 +28,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import test.com.globant.harrypotterapp.testObserver
-import java.lang.Exception
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
-    @ObsoleteCoroutinesApi
-    private var mainThreadSurrogate = newSingleThreadContext(TEST_THREAD)
+
+    private val testDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
@@ -45,15 +45,15 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
         getHousesUseCase = GetHousesUseCaseImpl(mockedHouseService, mockedDataBase)
         mainViewModel = MainViewModel(getHousesUseCase)
     }
 
     @After
     fun after() {
-        mainThreadSurrogate.close()
         Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -92,11 +92,14 @@ class MainViewModelTest {
 
         whenever(mockedHouseService.getHouses()).thenReturn(failureResult)
         whenever(failureResult.exception).thenReturn(exception)
+        whenever(mockedDataBase.getHouses()).thenReturn(failureResult)
+
         runBlocking {
             mainViewModel.fetchHouses().join()
         }
 
         verify(mockedHouseService).getHouses()
+        verify(mockedDataBase).getHouses()
 
         assertEquals(errorResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
         assertEquals(errorResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)
@@ -104,7 +107,6 @@ class MainViewModelTest {
     }
 
     companion object {
-        private const val TEST_THREAD = "testThread"
         private const val ZERO = 0
         private const val ONE = 1
     }

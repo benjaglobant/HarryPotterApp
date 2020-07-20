@@ -1,14 +1,14 @@
 package com.globant.harrypotterapp.splashtest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.globant.harrypotterapp.viewmodel.contract.SplashContract
 import com.globant.harrypotterapp.viewmodel.SplashState
 import com.globant.harrypotterapp.viewmodel.SplashViewModel
+import com.globant.harrypotterapp.viewmodel.contract.SplashContract
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -19,10 +19,10 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import test.com.globant.harrypotterapp.testObserver
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SplashViewModelTest {
-    @ObsoleteCoroutinesApi
-    private var mainThreadSurrogate = newSingleThreadContext(UI_THREAD)
+    private val testDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
@@ -31,21 +31,21 @@ class SplashViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
         splashViewModel = SplashViewModel()
     }
 
     @After
     fun after() {
-        mainThreadSurrogate.close()
         Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
     fun `on startTimer called`() {
         val liveDataUnderTest = splashViewModel.getSplashStateLiveData().testObserver()
 
-        runBlocking {
+        runBlockingTest(testDispatcher) {
             splashViewModel.startTimer().join()
         }
 
@@ -54,7 +54,6 @@ class SplashViewModelTest {
     }
 
     companion object {
-        private const val UI_THREAD = "UI thread"
         private const val ZERO = 0
         private const val ONE = 1
     }
