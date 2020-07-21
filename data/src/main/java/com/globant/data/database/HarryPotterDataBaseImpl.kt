@@ -15,7 +15,7 @@ import com.globant.domain.entity.HouseDetail
 import com.globant.domain.util.Result
 import java.lang.Exception
 
-@Database(entities = [SpellRoom::class, HouseRoom::class, HouseDetailEntity::class], version = 2)
+@Database(entities = [SpellRoom::class, HouseRoom::class, HouseDetailEntity::class], version = 1)
 abstract class HarryPotterDataBaseImpl : RoomDatabase(), HarryPotterDataBase {
 
     abstract fun harryPotterDao(): HarryPotterDao

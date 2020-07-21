@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setOnClickListeners()
         mainViewModel.fetchHouses()
-        // TODO: observe and react to this Job, and use de fetched data
     }
 
     private fun setOnClickListeners() {
