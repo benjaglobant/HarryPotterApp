@@ -2,13 +2,17 @@ package com.globant.di
 
 import androidx.room.Room
 import com.globant.data.database.HarryPotterRoomDataBaseImpl
+import com.globant.data.service.HouseDetailServiceImpl
 import com.globant.data.service.HouseServiceImpl
 import com.globant.data.service.SpellsServiceImpl
 import com.globant.domain.database.HarryPotterRoomDataBase
+import com.globant.domain.service.HouseDetailService
 import com.globant.domain.service.HouseService
 import com.globant.domain.service.SpellsService
+import com.globant.domain.usecase.GetHouseDetailByIdUseCase
 import com.globant.domain.usecase.GetHousesUseCase
 import com.globant.domain.usecase.GetSpellsUseCase
+import com.globant.domain.usecase.implementation.GetHouseDetailByIdUseCaseImpl
 import com.globant.domain.usecase.implementation.GetHousesUseCaseImpl
 import com.globant.domain.usecase.implementation.GetSpellsUseCaseImpl
 import org.koin.dsl.module
@@ -16,6 +20,7 @@ import org.koin.dsl.module
 val serviceModule = module {
     single<SpellsService> { SpellsServiceImpl() }
     single<HouseService> { HouseServiceImpl() }
+    single<HouseDetailService> { HouseDetailServiceImpl() }
 }
 
 val databaseModule = module {
@@ -26,6 +31,7 @@ val databaseModule = module {
 val useCaseModule = module {
     single<GetSpellsUseCase> { GetSpellsUseCaseImpl(get(), get()) }
     single<GetHousesUseCase> { GetHousesUseCaseImpl(get(), get()) }
+    single<GetHouseDetailByIdUseCase> { GetHouseDetailByIdUseCaseImpl(get(), get()) }
 }
 
 private const val DATA_BASE_NAME = "HarryPotterDatabase"

@@ -41,7 +41,15 @@ abstract class HarryPotterRoomDataBaseImpl : RoomDatabase(), HarryPotterRoomData
             } else {
                 Result.Failure(Exception(HOUSE_ERROR))
             }
-            // THIS METHOD WILL BE USED TO GET THE HOUSE FROM THE DATABASE BY A NAME PASSED
+        }
+
+    override fun getHouses(): Result<List<House>> =
+        harryPotterDao().getHouses().let {
+            if (it.isNotEmpty()) {
+                Result.Success(houseMapper.transformToListOfHouse(it))
+            } else {
+                Result.Failure(Exception(HOUSES_ERROR))
+            }
         }
 
     override fun updateHouses(houses: List<House>) {
@@ -53,5 +61,6 @@ abstract class HarryPotterRoomDataBaseImpl : RoomDatabase(), HarryPotterRoomData
     companion object {
         private const val SPELLS_ERROR = "Spells not found"
         private const val HOUSE_ERROR = "House not found"
+        private const val HOUSES_ERROR = "Houses not found"
     }
 }

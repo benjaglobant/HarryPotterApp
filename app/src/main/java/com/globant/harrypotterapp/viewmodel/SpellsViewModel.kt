@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.globant.domain.entity.Spell
 import com.globant.domain.usecase.GetSpellsUseCase
 import com.globant.domain.util.Result
-import com.globant.harrypotterapp.util.Data
 import com.globant.harrypotterapp.util.Event
-import com.globant.harrypotterapp.util.Status
 import com.globant.harrypotterapp.viewmodel.contract.SpellsContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,20 +17,28 @@ class SpellsViewModel(
     private val getSpellsUseCase: GetSpellsUseCase
 ) : ViewModel(), SpellsContract.ViewModel {
 
-    private val spellsMutableLiveData = MutableLiveData<Event<Data<List<Spell>>>>()
-    override fun getSpellsLiveData(): LiveData<Event<Data<List<Spell>>>> = spellsMutableLiveData
+    private val spellsMutableLiveData = MutableLiveData<Event<SpellData<List<Spell>>>>()
+    override fun getSpellsLiveData(): LiveData<Event<SpellData<List<Spell>>>> = spellsMutableLiveData
 
     override fun fetchSpells() = viewModelScope.launch {
-        spellsMutableLiveData.postValue(Event(Data(status = Status.LOADING)))
+        spellsMutableLiveData.postValue(Event(SpellData(status = SpellStatus.LOADING_SPELLS)))
         withContext(Dispatchers.IO) { getSpellsUseCase.invoke() }.let { result ->
             when (result) {
                 is Result.Success -> {
-                    spellsMutableLiveData.postValue(Event(Data(status = Status.SUCCESS, data = result.data)))
+                    spellsMutableLiveData.postValue(Event(SpellData(status = SpellStatus.SUCCESS_SPELLS, data = result.data)))
                 }
                 is Result.Failure -> {
-                    spellsMutableLiveData.postValue(Event(Data(status = Status.ERROR, error = result.exception)))
+                    spellsMutableLiveData.postValue(Event(SpellData(status = SpellStatus.ERROR_SPELLS, error = result.exception)))
                 }
             }
         }
     }
+}
+
+data class SpellData<RequestData>(var status: SpellStatus, var data: RequestData? = null, var error: Exception? = null)
+
+enum class SpellStatus {
+    LOADING_SPELLS,
+    SUCCESS_SPELLS,
+    ERROR_SPELLS
 }

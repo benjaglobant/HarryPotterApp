@@ -9,4 +9,5 @@ interface HarryPotterRoomDataBase {
     fun updateSpells(spells: List<Spell>)
     fun getHouseByName(name: String): Result<List<House>>
     fun updateHouses(houses: List<House>)
+    fun getHouses(): Result<List<House>>
 }

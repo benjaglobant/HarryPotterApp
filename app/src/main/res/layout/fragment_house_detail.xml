@@ -12,6 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/house_detail_fragment_loader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
         <ImageView
             android:id="@+id/house_detail_fragment_image"
             android:layout_width="wrap_content"

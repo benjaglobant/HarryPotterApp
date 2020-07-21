@@ -7,17 +7,17 @@ import com.globant.domain.service.SpellsService
 import com.globant.domain.usecase.GetSpellsUseCase
 import com.globant.domain.usecase.implementation.GetSpellsUseCaseImpl
 import com.globant.domain.util.Result
-import com.globant.harrypotterapp.util.Data
-import com.globant.harrypotterapp.util.Status
+import com.globant.harrypotterapp.viewmodel.SpellData
+import com.globant.harrypotterapp.viewmodel.SpellStatus
 import com.globant.harrypotterapp.viewmodel.SpellsViewModel
 import com.globant.harrypotterapp.viewmodel.contract.SpellsContract
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -28,12 +28,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import test.com.globant.harrypotterapp.testObserver
-import java.lang.Exception
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SpellsViewModelTest {
-    @ObsoleteCoroutinesApi
-    private var mainThreadSurrogate = newSingleThreadContext(TEST_THREAD)
+    private val testDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
@@ -47,26 +46,27 @@ class SpellsViewModelTest {
     private val exception: Exception = mock()
     private val listOfSpells: List<Spell> = mock()
     private val successResponseList = listOf(
-        Data(status = Status.LOADING),
-        Data(status = Status.SUCCESS, data = listOfSpells)
+        SpellData(status = SpellStatus.LOADING_SPELLS),
+        SpellData(status = SpellStatus.SUCCESS_SPELLS, data = listOfSpells)
     )
     private val errorResponseList = listOf(
-        Data(status = Status.LOADING),
-        Data(status = Status.ERROR, data = null, error = exception)
+        SpellData(status = SpellStatus.LOADING_SPELLS),
+        SpellData(status = SpellStatus.ERROR_SPELLS, data = null, error = exception)
     )
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
         getSpellsUseCase = GetSpellsUseCaseImpl(mockedSpellsService, mockedDatabase)
         spellsViewModel = SpellsViewModel(getSpellsUseCase)
     }
 
     @After
     fun after() {
-        mainThreadSurrogate.close()
         Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
+
     @Test
     fun `when fetchSpells returns a success result`() {
         val spellsLiveData = spellsViewModel.getSpellsLiveData().testObserver()
@@ -77,7 +77,6 @@ class SpellsViewModelTest {
             spellsViewModel.fetchSpells().join()
         }
 
-        verify(getSpellsUseCase).invoke()
         verify(mockedSpellsService).getSpells()
 
         assertEquals(successResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
@@ -96,7 +95,6 @@ class SpellsViewModelTest {
             spellsViewModel.fetchSpells().join()
         }
 
-        verify(getSpellsUseCase).invoke()
         verify(mockedSpellsService).getSpells()
 
         val dataFirstTime = spellsLiveData.observedValues[ONE]?.getContentIfNotHandled()
@@ -120,7 +118,6 @@ class SpellsViewModelTest {
             spellsViewModel.fetchSpells().join()
         }
 
-        verify(getSpellsUseCase).invoke()
         verify(mockedSpellsService).getSpells()
         verify(mockedDatabase).getSpellsFromDataBase()
 
@@ -141,7 +138,6 @@ class SpellsViewModelTest {
             spellsViewModel.fetchSpells().join()
         }
 
-        verify(getSpellsUseCase).invoke()
         verify(mockedSpellsService).getSpells()
         verify(mockedDatabase).getSpellsFromDataBase()
 
@@ -149,6 +145,7 @@ class SpellsViewModelTest {
         assertEquals(errorResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
         assertEquals(errorResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
     }
+
     companion object {
         private const val TEST_THREAD = "testThread"
         private const val ZERO = 0
