@@ -1,7 +1,7 @@
 package com.globant.harrypotterapp.spellstest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.globant.domain.database.HarryPotterRoomDataBase
+import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.entity.Spell
 import com.globant.domain.service.SpellsService
 import com.globant.domain.usecase.GetSpellsUseCase
@@ -39,7 +39,7 @@ class SpellsViewModelTest {
 
     private lateinit var spellsViewModel: SpellsContract.ViewModel
     private lateinit var getSpellsUseCase: GetSpellsUseCase
-    private val mockedDatabase: HarryPotterRoomDataBase = mock()
+    private val mockedDatabase: HarryPotterDataBase = mock()
     private val mockedSpellsService: SpellsService = mock()
     private val successResult: Result.Success<List<Spell>> = mock()
     private val failureResult: Result.Failure = mock()

@@ -58,7 +58,7 @@ class HouseDetailFragment : Fragment() {
 
     private fun showErrorMessage() {
         binding.houseDetailFragmentLoader.visibility = View.GONE
-        binding.houseDetailFragmentImage.setImageResource(R.drawable.hogwarts)
+        binding.fragmentHouseDetailRoot.background = context?.getDrawable(R.drawable.hogwarts)
         Toast.makeText(this.context, getString(R.string.house_detail_fragment_error_message), Toast.LENGTH_SHORT).show()
     }
 

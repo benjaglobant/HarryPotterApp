@@ -1,11 +1,11 @@
 package com.globant.di
 
 import androidx.room.Room
-import com.globant.data.database.HarryPotterRoomDataBaseImpl
+import com.globant.data.database.HarryPotterDataBaseImpl
 import com.globant.data.service.HouseDetailServiceImpl
 import com.globant.data.service.HouseServiceImpl
 import com.globant.data.service.SpellsServiceImpl
-import com.globant.domain.database.HarryPotterRoomDataBase
+import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.service.HouseDetailService
 import com.globant.domain.service.HouseService
 import com.globant.domain.service.SpellsService
@@ -24,8 +24,8 @@ val serviceModule = module {
 }
 
 val databaseModule = module {
-    single<HarryPotterRoomDataBase> { Room.databaseBuilder(get(), HarryPotterRoomDataBaseImpl::class.java, DATA_BASE_NAME).build() }
-    single { get<HarryPotterRoomDataBaseImpl>().harryPotterDao() }
+    single<HarryPotterDataBase> { Room.databaseBuilder(get(), HarryPotterDataBaseImpl::class.java, DATA_BASE_NAME).build() }
+    single { get<HarryPotterDataBaseImpl>().harryPotterDao() }
 }
 
 val useCaseModule = module {

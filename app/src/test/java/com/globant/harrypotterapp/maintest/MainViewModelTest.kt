@@ -1,7 +1,7 @@
 package com.globant.harrypotterapp.maintest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.globant.domain.database.HarryPotterRoomDataBase
+import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.entity.House
 import com.globant.domain.service.HouseService
 import com.globant.domain.usecase.GetHousesUseCase
@@ -41,7 +41,7 @@ class MainViewModelTest {
     private lateinit var mainViewModel: MainContract.ViewModel
     private lateinit var getHousesUseCase: GetHousesUseCase
     private val mockedHouseService: HouseService = mock()
-    private val mockedDataBase: HarryPotterRoomDataBase = mock()
+    private val mockedDataBase: HarryPotterDataBase = mock()
 
     @Before
     fun setUp() {

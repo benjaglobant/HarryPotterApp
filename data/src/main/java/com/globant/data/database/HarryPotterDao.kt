@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.globant.data.entity.HouseDetailEntity
 import com.globant.data.entity.HouseRoom
 import com.globant.data.entity.SpellRoom
 
 @Dao
-interface HarryPotterRoomDao {
+interface HarryPotterDao {
     @Query("SELECT * FROM spells_table")
     fun getSpells(): List<SpellRoom>
 
@@ -23,4 +24,10 @@ interface HarryPotterRoomDao {
 
     @Query("SELECT * FROM house_table")
     fun getHouses(): List<HouseRoom>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertHouseDetail(houseDetail: HouseDetailEntity)
+
+    @Query("SELECT * FROM house_detail_table WHERE name = :houseName")
+    fun getHouseDetailByName(houseName: String): List<HouseDetailEntity>
 }
