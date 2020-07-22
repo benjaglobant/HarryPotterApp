@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_house_detail_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".fragment.HouseDetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/house_detail_fragment_loader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/house_detail_fragment_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/house_detail_fragment_view_margin_top"/>
+
+        <TextView
+            android:id="@+id/house_detail_fragment_name"
+            style="@style/style_house_detail_fragment_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_detail_fragment_image" />
+
+        <TextView
+            android:id="@+id/house_detail_fragment_mascot"
+            style="@style/style_house_detail_fragment_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_detail_fragment_name" />
+
+        <TextView
+            android:id="@+id/house_detail_fragment_head_of_house"
+            style="@style/style_house_detail_fragment_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_detail_fragment_mascot" />
+
+        <TextView
+            android:id="@+id/house_detail_fragment_house_ghost"
+            style="@style/style_house_detail_fragment_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_detail_fragment_head_of_house" />
+
+        <TextView
+            android:id="@+id/house_detail_fragment_founder"
+            style="@style/style_house_detail_fragment_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_detail_fragment_house_ghost" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
