@@ -13,4 +13,10 @@
     <dimen name="activity_house_app_bar_title_margin_top">10dp</dimen>
     <dimen name="house_detail_fragment_text_size">35sp</dimen>
     <dimen name="house_detail_fragment_view_margin_top">18dp</dimen>
+    <dimen name="characters_fragment_card_view_margin_top">18dp</dimen>
+    <dimen name="characters_fragment_card_view_margin_horizontal">30dp</dimen>
+    <dimen name="characters_fragment_card_view_corner_radius">10dp</dimen>
+    <dimen name="characters_fragment_card_view_text_view_margin_top">5dp</dimen>
+    <dimen name="characters_fragment_card_view_text_view_text_size">36sp</dimen>
+    <dimen name="characters_fragment_card_view_padding">10dp</dimen>
 </resources>

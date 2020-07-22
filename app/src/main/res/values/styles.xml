@@ -58,4 +58,17 @@
         <item name="android:layout_marginTop">@dimen/house_detail_fragment_view_margin_top</item>
     </style>
 
+    <style name="style_characters_fragment_card_view">
+        <item name="android:layout_marginTop">@dimen/characters_fragment_card_view_margin_top</item>
+        <item name="android:layout_marginHorizontal">@dimen/characters_fragment_card_view_margin_horizontal</item>
+        <item name="alpha">0.9</item>
+        <item name="cardCornerRadius">@dimen/characters_fragment_card_view_corner_radius</item>
+    </style>
+
+    <style name="style_characters_fragment_card_view_text_view" parent="@style/style_base_text_view">
+        <item name="android:layout_marginTop">@dimen/characters_fragment_card_view_text_view_margin_top</item>
+        <item name="android:textSize">@dimen/characters_fragment_card_view_text_view_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
