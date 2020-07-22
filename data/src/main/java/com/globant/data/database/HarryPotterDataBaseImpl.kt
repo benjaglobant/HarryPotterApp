@@ -2,26 +2,37 @@ package com.globant.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.globant.data.entity.CharacterDetailEntity
+import com.globant.data.entity.CharacterEntity
 import com.globant.data.entity.HouseDetailEntity
 import com.globant.data.entity.HouseRoom
 import com.globant.data.mapper.SpellDataBaseMapper
 import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.entity.Spell
 import com.globant.data.entity.SpellRoom
+import com.globant.data.mapper.CharacterDatabaseMapper
+import com.globant.data.mapper.CharacterDetailDatabaseMapper
 import com.globant.data.mapper.HouseDataBaseMapper
 import com.globant.data.mapper.HouseDetailDatabaseMapper
+import com.globant.domain.entity.Character
+import com.globant.domain.entity.CharacterDetail
 import com.globant.domain.entity.House
 import com.globant.domain.entity.HouseDetail
 import com.globant.domain.util.Result
 import java.lang.Exception
 
-@Database(entities = [SpellRoom::class, HouseRoom::class, HouseDetailEntity::class], version = 1)
+@Database(
+    entities = [SpellRoom::class, HouseRoom::class, HouseDetailEntity::class, CharacterEntity::class, CharacterDetailEntity::class],
+    version = 1
+)
 abstract class HarryPotterDataBaseImpl : RoomDatabase(), HarryPotterDataBase {
 
     abstract fun harryPotterDao(): HarryPotterDao
     private val spellsMapper = SpellDataBaseMapper()
     private val houseMapper = HouseDataBaseMapper()
     private val houseDetailMapper = HouseDetailDatabaseMapper()
+    private val characterMapper = CharacterDatabaseMapper()
+    private val characterDetailMapper = CharacterDetailDatabaseMapper()
 
     override fun getSpellsFromDataBase(): Result<List<Spell>> =
         harryPotterDao().getSpells().let {
@@ -77,10 +88,40 @@ abstract class HarryPotterDataBaseImpl : RoomDatabase(), HarryPotterDataBase {
         }
     }
 
+    override fun getCharactersByHouseName(houseName: String): Result<List<Character>> =
+        harryPotterDao().getCharactersByHouseName(houseName).let {
+            if (it.isNotEmpty()) {
+                Result.Success(characterMapper.transformToListOfCharacter(it))
+            } else {
+                Result.Failure(Exception(CHARACTERS_ERROR))
+            }
+        }
+
+    override fun updateCharacters(characters: List<Character>, houseName: String) {
+        characters.forEach {
+            harryPotterDao().insertCharacter(characterMapper.transformToData(it, houseName))
+        }
+    }
+
+    override fun updateCharacterDetail(characterDetail: CharacterDetail) {
+        harryPotterDao().insertCharacterDetail(characterDetailMapper.transformToData(characterDetail))
+    }
+
+    override fun getCharacterDetail(characterId: String): Result<CharacterDetail> =
+        harryPotterDao().getCharacterDetail(characterId).let {
+            if (it.isNotEmpty()) {
+                Result.Success(characterDetailMapper.transform(it.first()))
+            } else {
+                Result.Failure(Exception(CHARACTER_DETAIL_ERROR))
+            }
+        }
+
     companion object {
         private const val SPELLS_ERROR = "Spells not found"
         private const val HOUSE_ERROR = "House not found"
         private const val HOUSES_ERROR = "Houses not found"
         private const val HOUSE_DETAIL_ERROR = "House detail not found"
+        private const val CHARACTERS_ERROR = "Characters not found"
+        private const val CHARACTER_DETAIL_ERROR = "Character detail not found"
     }
 }

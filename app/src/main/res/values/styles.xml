@@ -39,6 +39,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/harry_potter</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="style_activity_house_app_bar_title" parent="style_base_text_view">
@@ -58,4 +59,45 @@
         <item name="android:layout_marginTop">@dimen/house_detail_fragment_view_margin_top</item>
     </style>
 
+    <style name="style_characters_fragment_card_view">
+        <item name="android:layout_marginTop">@dimen/characters_fragment_card_view_margin_top</item>
+        <item name="android:layout_marginHorizontal">@dimen/characters_fragment_card_view_margin_horizontal</item>
+        <item name="alpha">0.9</item>
+        <item name="cardCornerRadius">@dimen/characters_fragment_card_view_corner_radius</item>
+    </style>
+
+    <style name="style_characters_fragment_card_view_text_view" parent="@style/style_base_text_view">
+        <item name="android:layout_marginTop">@dimen/characters_fragment_card_view_text_view_margin_top</item>
+        <item name="android:textSize">@dimen/characters_fragment_card_view_text_view_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+        
+    <style name="style_character_detail_activity_toolbar_title_expanded" parent="style_base_text_view">
+        <item name="android:textColor">@color/color_gold</item>
+        <item name="android:textSize">@dimen/character_detail_activity_title_expanded_text_size</item>
+    </style>
+
+    <style name="style_character_detail_activity_toolbar_title_collapsed" parent="style_base_text_view">
+        <item name="android:textColor">@color/color_gray</item>
+        <item name="android:textSize">@dimen/character_detail_activity_title_collapsed_text_size</item>
+    </style>
+
+    <style name="style_character_detail_activity_text_view" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/character_detail_activity_detail_text_size</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:background">@color/color_gray_20_opacity</item>
+        <item name="android:paddingVertical">@dimen/character_detail_activity_text_view_padding_vertical</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginHorizontal">@dimen/character_detail_activity_detail_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/character_detail_activity_detail_margin_top</item>
+    </style>
+
+    <style name="style_character_detail_activity_collapsing_toolbar">
+        <item name="android:background">@color/color_gray</item>
+        <item name="expandedTitleTextAppearance">@style/style_character_detail_activity_toolbar_title_expanded</item>
+        <item name="collapsedTitleTextAppearance">@style/style_character_detail_activity_toolbar_title_collapsed</item>
+        <item name="contentScrim">@color/color_gold</item>
+    </style>
+    
 </resources>

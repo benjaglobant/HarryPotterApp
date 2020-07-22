@@ -5,4 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="color_gray">#262629</color>
     <color name="color_light_gray">#494949</color>
+    <color name="color_gray_20_opacity">#D9262629</color>
+    <color name="color_gold">#FFD323</color>
 </resources>
