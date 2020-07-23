@@ -13,5 +13,5 @@ val viewModelModule = module {
     viewModel { SpellsViewModel(get()) }
     viewModel { MainViewModel(get()) }
     viewModel { HouseDetailViewModel(get()) }
-    viewModel { CharactersViewModel() }
+    viewModel { CharactersViewModel(get()) }
 }

@@ -7,6 +7,14 @@
     tools:context=".fragment.CharactersFragment"
     android:background="@drawable/characters_background">
 
+    <ProgressBar
+        android:id="@+id/characters_fragment_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/characters_fragment_recycler_view"
         android:layout_width="match_parent"

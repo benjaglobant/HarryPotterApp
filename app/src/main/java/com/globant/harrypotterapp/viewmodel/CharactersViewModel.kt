@@ -3,27 +3,44 @@ package com.globant.harrypotterapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.globant.domain.entity.Character
+import com.globant.domain.usecase.GetCharactersUseCase
+import com.globant.domain.util.Result
+import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.contract.CharactersContract
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class CharactersViewModel : ViewModel(), CharactersContract.ViewModel {
+class CharactersViewModel(private val getCharactersUseCase: GetCharactersUseCase) : ViewModel(), CharactersContract.ViewModel {
 
-    private val charactersMutableLiveData = MutableLiveData<List<Character>>()
-    override fun getCharactersLiveData(): LiveData<List<Character>> = charactersMutableLiveData
+    private val charactersMutableLiveData = MutableLiveData<Event<CharactersData<List<Character>>>>()
+    override fun getCharactersLiveData(): LiveData<Event<CharactersData<List<Character>>>> = charactersMutableLiveData
 
-    override fun fetchCharacters() {
-        charactersMutableLiveData.value = listOf(
-            Character("1", "Rubeus Hagrid", "Groundkeeper, Professor, Care of Magical Creatures"),
-            Character("1", "Bathsheda Babbling", "Professor, Ancient Runes"),
-            Character("1", "Ludo Bagman", "Head, Department of Magical Games and Sports"),
-            Character("1", "Bathilda Bagshot", "Author, A History Of Magic"),
-            Character("1", "Katie Bell", "student"),
-            Character("1", "Cuthbert Binns", "Professor, History of Magic"),
-            Character("1", "Phineas Nigellus Black", "(Formerly) Headmaster of Hogwarts"),
-            Character("1", "Amelia Bones", "Head, Department of Magical Law Enforcement"),
-            Character("1", "Susan Bones", "Hogwarts School of Witchcraft and Wizardry"),
-            Character("1", "Katie Bell", "student"),
-            Character("1", "Mafalda Hopkirk", "Assistant, mproper Use of Magic Office")
-        )
+    override fun fetchCharacters(houseName: String) = viewModelScope.launch {
+        charactersMutableLiveData.postValue(Event(CharactersData(status = CharactersStatus.LOADING_CHARACTERS)))
+        withContext(Dispatchers.IO) { getCharactersUseCase(houseName) }.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    charactersMutableLiveData.postValue(
+                        Event(CharactersData(status = CharactersStatus.SUCCESS_CHARACTERS, data = result.data))
+                    )
+                }
+                is Result.Failure -> {
+                    charactersMutableLiveData.postValue(
+                        Event(CharactersData(status = CharactersStatus.ERROR_CHARACTERS, error = result.exception))
+                    )
+                }
+            }
+        }
     }
+}
+
+data class CharactersData<RequestData>(var status: CharactersStatus, var data: RequestData? = null, var error: Exception? = null)
+
+enum class CharactersStatus {
+    LOADING_CHARACTERS,
+    SUCCESS_CHARACTERS,
+    ERROR_CHARACTERS
 }

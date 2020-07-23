@@ -35,7 +35,7 @@ class HouseActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         val viewPager: ViewPager2 = binding.activityHouseViewPager
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, houseName)
 
         val tabLayout: TabLayout = binding.activityHouseTabLayout
         val listOfFragmentNames: List<String> = listOf(getString(R.string.house_detail_tab), getString(R.string.characters_tab))
