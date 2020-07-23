@@ -1,6 +1,7 @@
 package com.globant.harrypotterapp.characterstest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.entity.Character
 import com.globant.domain.service.CharactersService
 import com.globant.domain.usecase.GetCharactersUseCase
@@ -39,11 +40,22 @@ class CharactersViewModelTest {
     private lateinit var charactersViewModel: CharactersContract.ViewModel
     private lateinit var getCharactersUseCase: GetCharactersUseCase
     private val mockedCharactersService: CharactersService = mock()
+    private val mockedDatabase: HarryPotterDataBase = mock()
+    private val listOfCharacters: List<Character> = mock()
+    private val exception: Exception = mock()
+    private val successResponseList = listOf(
+        CharactersData(status = CharactersStatus.LOADING_CHARACTERS),
+        CharactersData(status = CharactersStatus.SUCCESS_CHARACTERS, data = listOfCharacters)
+    )
+    private val failureResponseList: List<CharactersData<List<Character>>> = listOf(
+        CharactersData(status = CharactersStatus.LOADING_CHARACTERS),
+        CharactersData(status = CharactersStatus.ERROR_CHARACTERS, error = exception)
+    )
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        getCharactersUseCase = GetCharactersUseCaseImpl(mockedCharactersService)
+        getCharactersUseCase = GetCharactersUseCaseImpl(mockedCharactersService, mockedDatabase)
         charactersViewModel = CharactersViewModel(getCharactersUseCase)
     }
 
@@ -56,11 +68,6 @@ class CharactersViewModelTest {
     @Test
     fun `when fetchCharacters return success result`() {
         val charactersLiveData = charactersViewModel.getCharactersLiveData().testObserver()
-        val listOfCharacters: List<Character> = mock()
-        val successResponseList = listOf(
-            CharactersData(status = CharactersStatus.LOADING_CHARACTERS),
-            CharactersData(status = CharactersStatus.SUCCESS_CHARACTERS, data = listOfCharacters)
-        )
 
         whenever(mockedCharactersService.getCharactersByHouse(GRYFFINDOR)).thenReturn(Result.Success(listOfCharacters))
 
@@ -76,21 +83,38 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `when fetchCharacters return failure result`() {
+    fun `on getting characters from API returns failure in result, then gets characters from database`() {
         val charactersLiveData = charactersViewModel.getCharactersLiveData().testObserver()
-        val exception: Exception = mock()
-        val failureResponseList = listOf(
-            CharactersData(status = CharactersStatus.LOADING_CHARACTERS),
-            CharactersData(status = CharactersStatus.ERROR_CHARACTERS, data = null, error = exception)
-        )
 
-        whenever(mockedCharactersService.getCharactersByHouse(GRYFFINDOR)).thenReturn(Result.Failure(exception))
+        whenever(mockedCharactersService.getCharactersByHouse(GRYFFINDOR)).thenReturn(Result.Failure(exception = exception))
+        whenever(mockedDatabase.getCharactersByHouseName(GRYFFINDOR)).thenReturn(Result.Success(data = listOfCharacters))
 
         runBlocking {
             charactersViewModel.fetchCharacters(GRYFFINDOR).join()
         }
 
         verify(mockedCharactersService).getCharactersByHouse(GRYFFINDOR)
+        verify(mockedDatabase).getCharactersByHouseName(GRYFFINDOR)
+
+        assertEquals(successResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
+        assertEquals(successResponseList[ONE].data, charactersLiveData.observedValues[ONE]?.peekContent()?.data)
+    }
+
+    @Test
+    fun `on getting characters from API returns failure in result, then database return failure too`() {
+        val charactersLiveData = charactersViewModel.getCharactersLiveData().testObserver()
+        val failureResult = Result.Failure(exception = exception)
+
+        whenever(mockedCharactersService.getCharactersByHouse(GRYFFINDOR)).thenReturn(failureResult)
+        whenever(mockedDatabase.getCharactersByHouseName(GRYFFINDOR)).thenReturn(failureResult)
+
+        runBlocking {
+            charactersViewModel.fetchCharacters(GRYFFINDOR).join()
+        }
+
+        verify(mockedCharactersService).getCharactersByHouse(GRYFFINDOR)
+        verify(mockedDatabase).getCharactersByHouseName(GRYFFINDOR)
 
         assertEquals(failureResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
         assertEquals(failureResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
