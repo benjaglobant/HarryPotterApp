@@ -39,6 +39,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/harry_potter</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="style_activity_house_app_bar_title" parent="style_base_text_view">
