@@ -8,11 +8,11 @@ import com.globant.harrypotterapp.R
 import com.globant.domain.entity.Character
 import com.globant.harrypotterapp.databinding.FragmentCharactersCardViewBinding
 
-class CharactersAdapter(private val onCharacterClick: OnCharacterClick) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
+interface OnCharacterClicked {
+    fun onCharacterClicked()
+}
 
-    interface OnCharacterClick {
-        fun showCharacterDetail()
-    }
+class CharactersAdapter(private val onCharacterClicked: OnCharacterClicked) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
     private val characters = mutableListOf<Character>()
 
@@ -23,7 +23,7 @@ class CharactersAdapter(private val onCharacterClick: OnCharacterClick) : Recycl
                 parent,
                 false
             ),
-            onCharacterClick
+            onCharacterClicked
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -36,11 +36,11 @@ class CharactersAdapter(private val onCharacterClick: OnCharacterClick) : Recycl
         characters.addAll(characterList)
     }
 
-    class ViewHolder(itemView: View, private val onCharacterClick: OnCharacterClick) :
+    class ViewHolder(itemView: View, private val onCharacterClicked: OnCharacterClicked) :
         RecyclerView.ViewHolder(itemView) {
         private val binding = FragmentCharactersCardViewBinding.bind(itemView)
         fun bind(item: Character) = with(itemView) {
-            itemView.setOnClickListener { onCharacterClick.showCharacterDetail() }
+            itemView.setOnClickListener { onCharacterClicked.onCharacterClicked() }
             item.let {
                 binding.apply {
                     this.characterName.text = resources.getString(R.string.characters_fragment_card_view_name_text, it.name)

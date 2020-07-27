@@ -21,4 +21,6 @@
     <string name="character_detail_activity_death_eater_text">Death Eater:  %1$s</string>
     <string name="character_detail_activity_blood_status_text">Blood Status:  %1$s</string>
     <string name="character_detail_activity_species_text">Species:  %1$s</string>
+    <string name="string_value_yes">Yes</string>
+    <string name="string_value_no">No</string>
 </resources>

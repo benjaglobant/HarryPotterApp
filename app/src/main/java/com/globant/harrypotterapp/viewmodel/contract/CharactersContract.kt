@@ -10,5 +10,6 @@ interface CharactersContract {
     interface ViewModel {
         fun getCharactersLiveData(): LiveData<Event<CharactersData<List<Character>>>>
         fun fetchCharacters(houseName: String): Job
+        fun onCharacterClicked()
     }
 }

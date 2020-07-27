@@ -35,6 +35,10 @@ class CharactersViewModel(private val getCharactersUseCase: GetCharactersUseCase
             }
         }
     }
+
+    override fun onCharacterClicked() {
+        charactersMutableLiveData.value = Event(CharactersData(status = CharactersStatus.OPEN_CHARACTER_DETAIL))
+    }
 }
 
 data class CharactersData<RequestData>(var status: CharactersStatus, var data: RequestData? = null, var error: Exception? = null)
@@ -42,5 +46,6 @@ data class CharactersData<RequestData>(var status: CharactersStatus, var data: R
 enum class CharactersStatus {
     LOADING_CHARACTERS,
     SUCCESS_CHARACTERS,
-    ERROR_CHARACTERS
+    ERROR_CHARACTERS,
+    OPEN_CHARACTER_DETAIL
 }

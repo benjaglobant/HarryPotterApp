@@ -19,14 +19,10 @@
     <dimen name="characters_fragment_card_view_text_view_margin_top">5dp</dimen>
     <dimen name="characters_fragment_card_view_text_view_text_size">36sp</dimen>
     <dimen name="characters_fragment_card_view_padding">10dp</dimen>
-    <dimen name="character_detail_activity_title_text_size">40sp</dimen>
-    <dimen name="character_detail_activity_title_padding_horizontal">20dp</dimen>
-    <dimen name="character_detail_activity_title_padding_vertical">10dp</dimen>
-    <dimen name="character_detail_activity_name_text_size">55sp</dimen>
-    <dimen name="character_detail_activity_name_padding_horizontal">45dp</dimen>
-    <dimen name="character_detail_activity_name_padding_vertical">10dp</dimen>
-    <dimen name="character_detail_activity_name_margin">15dp</dimen>
+    <dimen name="character_detail_activity_title_expanded_text_size">70sp</dimen>
+    <dimen name="character_detail_activity_title_collapsed_text_size">50sp</dimen>
     <dimen name="character_detail_activity_detail_text_size">40sp</dimen>
     <dimen name="character_detail_activity_detail_margin_horizontal">12dp</dimen>
-    <dimen name="character_detail_activity_detail_margin_top">18dp</dimen>
+    <dimen name="character_detail_activity_detail_margin_top">12dp</dimen>
+    <dimen name="character_detail_activity_text_view_padding_vertical">8dp</dimen>
 </resources>

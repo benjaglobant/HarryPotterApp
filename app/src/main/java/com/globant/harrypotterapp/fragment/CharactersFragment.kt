@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.domain.entity.Character
 import com.globant.harrypotterapp.activity.CharacterDetailActivity
 import com.globant.harrypotterapp.adapter.CharactersAdapter
+import com.globant.harrypotterapp.adapter.OnCharacterClicked
 import com.globant.harrypotterapp.databinding.FragmentCharactersBinding
 import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.CharactersData
@@ -17,7 +18,7 @@ import com.globant.harrypotterapp.viewmodel.CharactersStatus
 import com.globant.harrypotterapp.viewmodel.CharactersViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharactersFragment : Fragment(), CharactersAdapter.OnCharacterClick {
+class CharactersFragment : Fragment(), OnCharacterClicked {
 
     private lateinit var binding: FragmentCharactersBinding
     private val charactersAdapter = CharactersAdapter(this)
@@ -46,6 +47,9 @@ class CharactersFragment : Fragment(), CharactersAdapter.OnCharacterClick {
             CharactersStatus.ERROR_CHARACTERS -> {
                 showCharactersErrorMessage(charactersData.error?.message)
             }
+            CharactersStatus.OPEN_CHARACTER_DETAIL -> {
+                openCharacterDetail()
+            }
         }
     }
 
@@ -61,7 +65,11 @@ class CharactersFragment : Fragment(), CharactersAdapter.OnCharacterClick {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showCharacterDetail() {
+    override fun onCharacterClicked() {
+        charactersViewModel.onCharacterClicked()
+    }
+
+    private fun openCharacterDetail() {
         this.context?.let { startActivity(CharacterDetailActivity.getIntent(it)) }
     }
 
