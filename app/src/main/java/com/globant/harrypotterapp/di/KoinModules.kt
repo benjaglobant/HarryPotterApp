@@ -1,5 +1,6 @@
 package com.globant.harrypotterapp.di
 
+import com.globant.harrypotterapp.viewmodel.CharacterDetailViewModel
 import com.globant.harrypotterapp.viewmodel.CharactersViewModel
 import com.globant.harrypotterapp.viewmodel.HouseDetailViewModel
 import com.globant.harrypotterapp.viewmodel.MainViewModel
@@ -14,4 +15,5 @@ val viewModelModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { HouseDetailViewModel(get()) }
     viewModel { CharactersViewModel(get()) }
+    viewModel { CharacterDetailViewModel() }
 }

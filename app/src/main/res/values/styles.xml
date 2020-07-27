@@ -72,4 +72,31 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="style_character_detail_activity_title_text_view" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/character_detail_activity_title_text_size</item>
+        <item name="android:paddingHorizontal">@dimen/character_detail_activity_title_padding_horizontal</item>
+        <item name="android:paddingVertical">@dimen/character_detail_activity_title_padding_vertical</item>
+        <item name="android:background">@color/color_gray_20_opacity</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="style_character_detail_activity_name_text_view" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/character_detail_activity_name_text_size</item>
+        <item name="android:paddingHorizontal">@dimen/character_detail_activity_name_padding_horizontal</item>
+        <item name="android:paddingVertical">@dimen/character_detail_activity_name_padding_vertical</item>
+        <item name="android:layout_margin">@dimen/character_detail_activity_name_margin</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="style_character_detail_activity_text_view" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/character_detail_activity_detail_text_size</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@color/color_gray_20_opacity</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginHorizontal">@dimen/character_detail_activity_detail_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/character_detail_activity_detail_margin_top</item>
+    </style>
+
 </resources>
