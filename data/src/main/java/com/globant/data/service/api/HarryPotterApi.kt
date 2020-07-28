@@ -1,5 +1,6 @@
 package com.globant.data.service.api
 
+import com.globant.data.service.response.CharacterDetailResponse
 import com.globant.data.service.response.CharacterResponse
 import com.globant.data.service.response.HouseDetailResponse
 import com.globant.data.service.response.HouseResponse
@@ -21,4 +22,7 @@ interface HarryPotterApi {
 
     @GET("v1/characters")
     fun getCharactersByHouseName(@Query("house") house: String): Call<List<CharacterResponse>>
+
+    @GET("v1/characters/{characterId}")
+    fun getCharacterDetailByCharacterId(@Path("characterId") characterId: String): Call<CharacterDetailResponse>
 }

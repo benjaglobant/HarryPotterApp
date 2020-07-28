@@ -85,6 +85,7 @@
     <style name="style_character_detail_activity_text_view" parent="style_base_text_view">
         <item name="android:textSize">@dimen/character_detail_activity_detail_text_size</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">gone</item>
         <item name="android:background">@color/color_gray_20_opacity</item>
         <item name="android:paddingVertical">@dimen/character_detail_activity_text_view_padding_vertical</item>
         <item name="android:textColor">@android:color/white</item>
