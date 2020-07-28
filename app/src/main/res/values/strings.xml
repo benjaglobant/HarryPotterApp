@@ -12,4 +12,15 @@
     <string name="house_detail_fragment_error_message">Error: House details not found</string>
     <string name="characters_fragment_card_view_name_text">Name:  %1$s</string>
     <string name="characters_fragment_card_view_role_text">Role:  %1$s</string>
+    <string name="character_detail_activity_title_text">Details of:</string>
+    <string name="character_detail_activity_role_text">Role:  %1$s</string>
+    <string name="character_detail_activity_house_text">House:  %1$s</string>
+    <string name="character_detail_activity_ministry_of_magic_text">Ministry of Magic:  %1$s</string>
+    <string name="character_detail_activity_order_of_the_phoenix_text">Order of the Phoenix:  %1$s</string>
+    <string name="character_detail_activity_dumbledores_army_text">Dumbledores Army:  %1$s</string>
+    <string name="character_detail_activity_death_eater_text">Death Eater:  %1$s</string>
+    <string name="character_detail_activity_blood_status_text">Blood Status:  %1$s</string>
+    <string name="character_detail_activity_species_text">Species:  %1$s</string>
+    <string name="string_value_yes">Yes</string>
+    <string name="string_value_no">No</string>
 </resources>
