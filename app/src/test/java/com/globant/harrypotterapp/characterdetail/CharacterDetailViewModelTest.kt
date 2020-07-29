@@ -8,10 +8,10 @@ import com.globant.domain.usecase.GetCharacterDetailUseCase
 import com.globant.domain.usecase.implementation.GetCharacterDetailUseCaseImpl
 import com.globant.domain.util.Result
 import com.globant.harrypotterapp.viewmodel.CharacterDetailData
-import com.globant.harrypotterapp.viewmodel.CharacterDetailViewModel
+import com.globant.harrypotterapp.viewmodel.CharacterDetailStatus.ERROR_CHARACTER_DETAILS
 import com.globant.harrypotterapp.viewmodel.CharacterDetailStatus.LOADING_CHARACTER_DETAILS
 import com.globant.harrypotterapp.viewmodel.CharacterDetailStatus.SUCCESS_CHARACTER_DETAILS
-import com.globant.harrypotterapp.viewmodel.CharacterDetailStatus.ERROR_CHARACTER_DETAILS
+import com.globant.harrypotterapp.viewmodel.CharacterDetailViewModel
 import com.globant.harrypotterapp.viewmodel.contract.CharacterDetailContract
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -23,7 +23,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -77,33 +77,55 @@ class CharacterDetailViewModelTest {
             characterDetailViewModel.fetchCharacterDetail(HARRY_POTTER_ID).join()
         }
 
+        successResponseList[SECOND_RESPONSE].data?.let { verify(mockedDatabase).updateCharacterDetail(it) }
         verify(mockedCharacterDetailService).getCharacterDetail(HARRY_POTTER_ID)
 
-        Assert.assertEquals(successResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
-        Assert.assertEquals(successResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
-        Assert.assertEquals(successResponseList[ONE].data, charactersLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
-    fun `when fetchCharacterDetail return failure result`() {
+    fun `when fetchCharacterDetail return failure result, then gets character detail from database`() {
         val charactersLiveData = characterDetailViewModel.getCharacterDetailLiveData().testObserver()
 
-        whenever(mockedCharacterDetailService.getCharacterDetail(WRONG_HARRY_POTTER_ID)).thenReturn(Result.Failure(exception))
+        whenever(mockedCharacterDetailService.getCharacterDetail(HARRY_POTTER_ID)).thenReturn(Result.Failure(exception))
+        whenever(mockedDatabase.getCharacterDetail(HARRY_POTTER_ID)).thenReturn(Result.Success(data = characterDetail))
+
+        runBlocking {
+            characterDetailViewModel.fetchCharacterDetail(HARRY_POTTER_ID).join()
+        }
+
+        verify(mockedCharacterDetailService).getCharacterDetail(HARRY_POTTER_ID)
+        verify(mockedDatabase).getCharacterDetail(HARRY_POTTER_ID)
+
+        assertEquals(successResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
+    }
+
+    @Test
+    fun `when fetchCharacterDetail return failure result, then database returns failure too`() {
+        val charactersLiveData = characterDetailViewModel.getCharacterDetailLiveData().testObserver()
+        val failureResult = Result.Failure(exception)
+        whenever(mockedCharacterDetailService.getCharacterDetail(WRONG_HARRY_POTTER_ID)).thenReturn(failureResult)
+        whenever(mockedDatabase.getCharacterDetail(WRONG_HARRY_POTTER_ID)).thenReturn(failureResult)
 
         runBlocking {
             characterDetailViewModel.fetchCharacterDetail(WRONG_HARRY_POTTER_ID).join()
         }
 
         verify(mockedCharacterDetailService).getCharacterDetail(WRONG_HARRY_POTTER_ID)
+        verify(mockedDatabase).getCharacterDetail(WRONG_HARRY_POTTER_ID)
 
-        Assert.assertEquals(failureResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
-        Assert.assertEquals(failureResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
-        Assert.assertEquals(failureResponseList[ONE].error, charactersLiveData.observedValues[ONE]?.peekContent()?.error)
+        assertEquals(failureResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].error, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 
     companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
+        private const val FIRST_RESPONSE = 0
+        private const val SECOND_RESPONSE = 1
         private const val HARRY_POTTER_ID = "5a12292a0f5ae10021650d7e"
         private const val WRONG_HARRY_POTTER_ID = "1"
     }
