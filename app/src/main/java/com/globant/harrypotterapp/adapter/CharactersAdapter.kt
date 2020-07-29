@@ -9,7 +9,7 @@ import com.globant.domain.entity.Character
 import com.globant.harrypotterapp.databinding.FragmentCharactersCardViewBinding
 
 interface OnCharacterClicked {
-    fun onCharacterClicked()
+    fun onCharacterClicked(characterId: String)
 }
 
 class CharactersAdapter(private val onCharacterClicked: OnCharacterClicked) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
@@ -40,7 +40,7 @@ class CharactersAdapter(private val onCharacterClicked: OnCharacterClicked) : Re
         RecyclerView.ViewHolder(itemView) {
         private val binding = FragmentCharactersCardViewBinding.bind(itemView)
         fun bind(item: Character) = with(itemView) {
-            itemView.setOnClickListener { onCharacterClicked.onCharacterClicked() }
+            itemView.setOnClickListener { onCharacterClicked.onCharacterClicked(item.id) }
             item.let {
                 binding.apply {
                     this.characterName.text = resources.getString(R.string.characters_fragment_card_view_name_text, it.name)

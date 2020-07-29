@@ -24,6 +24,7 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
     private val charactersAdapter = CharactersAdapter(this)
     private val charactersViewModel by viewModel<CharactersViewModel>()
     private lateinit var houseName: String
+    private lateinit var characterIdValue: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
                 showCharactersErrorMessage(charactersData.error?.message)
             }
             CharactersStatus.OPEN_CHARACTER_DETAIL -> {
-                openCharacterDetail()
+                openCharacterDetail(characterIdValue)
             }
         }
     }
@@ -65,12 +66,13 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onCharacterClicked() {
+    override fun onCharacterClicked(characterId: String) {
+        characterIdValue = characterId
         charactersViewModel.onCharacterClicked()
     }
 
-    private fun openCharacterDetail() {
-        this.context?.let { startActivity(CharacterDetailActivity.getIntent(it)) }
+    private fun openCharacterDetail(characterId: String) {
+        this.context?.let { startActivity(CharacterDetailActivity.getIntent(it, characterId)) }
     }
 
     companion object {

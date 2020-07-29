@@ -5,10 +5,10 @@ data class CharacterDetail(
     val name: String,
     val role: String,
     val house: String,
-    val ministryOfMagic: Boolean,
-    val orderOfThePhoenix: Boolean,
-    val dumbledoresArmy: Boolean,
-    val deathEater: Boolean,
+    val ministryOfMagic: String,
+    val orderOfThePhoenix: String,
+    val dumbledoresArmy: String,
+    val deathEater: String,
     val bloodStatus: String,
     val species: String
 )
