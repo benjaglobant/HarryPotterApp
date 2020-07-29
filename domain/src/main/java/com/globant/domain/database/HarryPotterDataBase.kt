@@ -1,6 +1,7 @@
 package com.globant.domain.database
 
 import com.globant.domain.entity.Character
+import com.globant.domain.entity.CharacterDetail
 import com.globant.domain.entity.House
 import com.globant.domain.entity.HouseDetail
 import com.globant.domain.entity.Spell
@@ -16,4 +17,6 @@ interface HarryPotterDataBase {
     fun getHouseDetailByName(houseName: String): Result<List<HouseDetail>>
     fun updateCharacters(characters: List<Character>, houseName: String)
     fun getCharactersByHouseName(houseName: String): Result<List<Character>>
+    fun updateCharacterDetail(characterDetail: CharacterDetail)
+    fun getCharacterDetail(characterId: String): Result<CharacterDetail>
 }

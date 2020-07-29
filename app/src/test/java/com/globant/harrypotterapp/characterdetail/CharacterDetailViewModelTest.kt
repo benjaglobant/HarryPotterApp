@@ -1,6 +1,7 @@
 package com.globant.harrypotterapp.characterdetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.globant.domain.database.HarryPotterDataBase
 import com.globant.domain.entity.CharacterDetail
 import com.globant.domain.service.CharacterDetailService
 import com.globant.domain.usecase.GetCharacterDetailUseCase
@@ -41,6 +42,7 @@ class CharacterDetailViewModelTest {
     private lateinit var characterDetailViewModel: CharacterDetailContract.ViewModel
     private lateinit var getCharacterDetailUseCase: GetCharacterDetailUseCase
     private val mockedCharacterDetailService: CharacterDetailService = mock()
+    private val mockedDatabase: HarryPotterDataBase = mock()
     private val characterDetail: CharacterDetail = mock()
     private val exception: Exception = mock()
     private val successResponseList = listOf(
@@ -55,7 +57,7 @@ class CharacterDetailViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        getCharacterDetailUseCase = GetCharacterDetailUseCaseImpl(mockedCharacterDetailService)
+        getCharacterDetailUseCase = GetCharacterDetailUseCaseImpl(mockedCharacterDetailService, mockedDatabase)
         characterDetailViewModel = CharacterDetailViewModel(getCharacterDetailUseCase)
     }
 
