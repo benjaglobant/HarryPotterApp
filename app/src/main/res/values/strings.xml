@@ -24,4 +24,10 @@
     <string name="error_message_text">
         %1$s: The %2$s were neither obtained by the service nor by the database. \n Please go back to continue.
     </string>
+    <string name="characters_text">Characters</string>
+    <string name="house_detail_text">House details</string>
+    <string name="spells_text">Spells</string>
+    <string name="splash_screen_hogwarts_shield_image">hogwarts_shield_image</string>
+    <string name="expanded_collapsing_toolbar_image_description">expanded_collapsing_toolbar_image</string>
+    <string name="house_detail_shield_image_description">house\'s shield</string>
 </resources>

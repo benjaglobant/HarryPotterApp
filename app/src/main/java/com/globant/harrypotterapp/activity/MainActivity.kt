@@ -7,6 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.ActivityMainBinding
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.HUFFLEPUFF
+import com.globant.harrypotterapp.util.Constants.RAVENCLAW
+import com.globant.harrypotterapp.util.Constants.SLYTHERIN
 import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.MainData
 import com.globant.harrypotterapp.viewmodel.MainStatus
@@ -85,9 +89,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun getIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
-        private const val GRYFFINDOR = "Gryffindor"
-        private const val RAVENCLAW = "Ravenclaw"
-        private const val SLYTHERIN = "Slytherin"
-        private const val HUFFLEPUFF = "Hufflepuff"
     }
 }

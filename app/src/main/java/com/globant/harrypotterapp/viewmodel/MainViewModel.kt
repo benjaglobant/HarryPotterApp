@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.domain.usecase.GetHousesUseCase
 import com.globant.domain.util.Result
+import com.globant.harrypotterapp.util.Constants.EMPTY_STRING
 import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.contract.MainContract
 import kotlinx.coroutines.Dispatchers
@@ -41,11 +42,7 @@ class MainViewModel(private val getHousesUseCase: GetHousesUseCase) : ViewModel(
     }
 }
 
-data class MainData(var status: MainStatus, var houseName: String = EMPTY_STRING, var error: Exception? = null) {
-    companion object {
-        private const val EMPTY_STRING = ""
-    }
-}
+data class MainData(var status: MainStatus, var houseName: String = EMPTY_STRING, var error: Exception? = null)
 
 enum class MainStatus {
     LOADING_MAIN,

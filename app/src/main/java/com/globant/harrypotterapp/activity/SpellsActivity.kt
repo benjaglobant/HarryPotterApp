@@ -50,12 +50,11 @@ class SpellsActivity : AppCompatActivity() {
         with(binding) {
             spellsActivityLoader.visibility = View.GONE
             spellsActivityError.visibility = View.VISIBLE
-            spellsActivityError.text = getString(R.string.error_message_text, message, SPELLS)
+            spellsActivityError.text = getString(R.string.error_message_text, message, getString(R.string.spells_text))
         }
     }
 
     companion object {
-        private const val SPELLS = "Spells"
         fun getIntent(context: Context): Intent = Intent(context, SpellsActivity::class.java)
     }
 }

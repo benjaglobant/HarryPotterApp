@@ -10,6 +10,9 @@ import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.FragmentHouseDetailBinding
 import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
 import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.HUFFLEPUFF
+import com.globant.harrypotterapp.util.Constants.RAVENCLAW
+import com.globant.harrypotterapp.util.Constants.SLYTHERIN
 import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.HouseDetailData
 import com.globant.harrypotterapp.viewmodel.HouseDetailStatus
@@ -60,14 +63,7 @@ class HouseDetailFragment : Fragment() {
         with(binding) {
             houseDetailFragmentLoader.visibility = View.GONE
             houseDetailFragmentError.visibility = View.VISIBLE
-            houseDetailFragmentError.text = getString(R.string.error_message_text, message, HOUSE_DETAILS)
+            houseDetailFragmentError.text = getString(R.string.error_message_text, message, getString(R.string.house_detail_text))
         }
-    }
-
-    companion object {
-        private const val HOUSE_DETAILS = "House details"
-        private const val RAVENCLAW = "Ravenclaw"
-        private const val SLYTHERIN = "Slytherin"
-        private const val HUFFLEPUFF = "Hufflepuff"
     }
 }

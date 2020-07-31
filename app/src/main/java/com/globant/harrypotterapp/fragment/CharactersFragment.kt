@@ -65,7 +65,7 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
         with(binding) {
             charactersFragmentLoader.visibility = View.GONE
             charactersFragmentError.visibility = View.VISIBLE
-            charactersFragmentError.text = getString(R.string.error_message_text, message, CHARACTERS)
+            charactersFragmentError.text = getString(R.string.error_message_text, message, getString(R.string.characters_text))
         }
     }
 
@@ -79,7 +79,6 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
     }
 
     companion object {
-        private const val CHARACTERS = "Characters"
         private const val HOUSE_NAME = "houseName"
         fun getInstance(houseName: String): CharactersFragment {
             val args = Bundle()

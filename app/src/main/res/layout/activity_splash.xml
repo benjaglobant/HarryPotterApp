@@ -16,6 +16,6 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/splash_activity_hogwarts_image_view_margin"
         android:src="@drawable/hogwarts"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/splash_screen_hogwarts_shield_image" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

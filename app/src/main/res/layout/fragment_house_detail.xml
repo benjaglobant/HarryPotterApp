@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/house_detail_fragment_view_margin_top"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/house_detail_shield_image_description" />
 
         <TextView
             android:id="@+id/house_detail_fragment_name"
