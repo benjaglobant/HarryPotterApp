@@ -29,7 +29,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -124,8 +126,6 @@ class CharacterDetailViewModelTest {
     }
 
     companion object {
-        private const val FIRST_RESPONSE = 0
-        private const val SECOND_RESPONSE = 1
         private const val HARRY_POTTER_ID = "5a12292a0f5ae10021650d7e"
         private const val WRONG_HARRY_POTTER_ID = "1"
     }

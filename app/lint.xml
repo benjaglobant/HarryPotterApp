@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/background.webp" />
+        <ignore path="src/main/res/drawable/character_detail_background.webp" />
+        <ignore path="src/main/res/drawable/character_detail_image.webp" />
+        <ignore path="src/main/res/drawable/characters_background.webp" />
+        <ignore path="src/main/res/drawable/error_background.webp" />
+        <ignore path="src/main/res/drawable/gryffindor.webp" />
+        <ignore path="src/main/res/drawable/hogwarts.webp" />
+        <ignore path="src/main/res/drawable/hufflepuff.webp" />
+        <ignore path="src/main/res/drawable/ravenclaw.webp" />
+        <ignore path="src/main/res/drawable/slytherin.webp" />
+        <ignore path="src/main/res/drawable/spell_background.webp" />
+        <ignore path="src/main/res/drawable/spells.webp" />
+        <ignore path="src/main/res/drawable/spells_background.webp" />
+    </issue>
+</lint>

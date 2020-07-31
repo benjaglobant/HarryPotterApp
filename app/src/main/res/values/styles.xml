@@ -1,6 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" tools:keep="@style/AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">@android:color/black</item>
@@ -28,7 +28,7 @@
 
     <style name="style_spells_activity_card_view">
         <item name="android:layout_marginTop">@dimen/spells_activity_card_view_margin_top</item>
-        <item name="android:layout_marginHorizontal">@dimen/spells_activity_card_view_margin_horizontal</item>
+        <item name="android:layout_marginHorizontal" tools:targetApi="o">@dimen/spells_activity_card_view_margin_horizontal</item>
         <item name="alpha">0.9</item>
         <item name="cardCornerRadius">@dimen/spells_activity_card_view_corner_radius</item>
     </style>
@@ -61,7 +61,7 @@
 
     <style name="style_characters_fragment_card_view">
         <item name="android:layout_marginTop">@dimen/characters_fragment_card_view_margin_top</item>
-        <item name="android:layout_marginHorizontal">@dimen/characters_fragment_card_view_margin_horizontal</item>
+        <item name="android:layout_marginHorizontal" tools:targetApi="o">@dimen/characters_fragment_card_view_margin_horizontal</item>
         <item name="alpha">0.9</item>
         <item name="cardCornerRadius">@dimen/characters_fragment_card_view_corner_radius</item>
     </style>
@@ -87,9 +87,9 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:visibility">gone</item>
         <item name="android:background">@color/color_gray_20_opacity</item>
-        <item name="android:paddingVertical">@dimen/character_detail_activity_text_view_padding_vertical</item>
+        <item name="android:paddingVertical" tools:targetApi="o">@dimen/character_detail_activity_text_view_padding_vertical</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_marginHorizontal">@dimen/character_detail_activity_detail_margin_horizontal</item>
+        <item name="android:layout_marginHorizontal" tools:targetApi="o">@dimen/character_detail_activity_detail_margin_horizontal</item>
         <item name="android:layout_marginTop">@dimen/character_detail_activity_detail_margin_top</item>
     </style>
 
@@ -99,5 +99,12 @@
         <item name="collapsedTitleTextAppearance">@style/style_character_detail_activity_toolbar_title_collapsed</item>
         <item name="contentScrim">@color/color_gold</item>
     </style>
-    
+
+    <style name="style_error_message_text_view" parent="style_base_text_view">
+        <item name="android:textSize">@dimen/error_text_view_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:padding">@dimen/error_text_view_padding</item>
+        <item name="android:layout_margin">@dimen/error_text_view_margin</item>
+    </style>
+
 </resources>

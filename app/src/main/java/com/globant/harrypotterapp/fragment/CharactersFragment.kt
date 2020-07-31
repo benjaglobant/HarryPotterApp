@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.domain.entity.Character
+import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.activity.CharacterDetailActivity
 import com.globant.harrypotterapp.adapter.CharactersAdapter
 import com.globant.harrypotterapp.adapter.OnCharacterClicked
@@ -46,7 +46,7 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
                 showCharactersData(charactersData.data)
             }
             CharactersStatus.ERROR_CHARACTERS -> {
-                showCharactersErrorMessage(charactersData.error?.message)
+                showCharactersError(charactersData.error?.message)
             }
             CharactersStatus.OPEN_CHARACTER_DETAIL -> {
                 openCharacterDetail(characterIdValue)
@@ -61,9 +61,12 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
         binding.charactersFragmentRecyclerView.adapter = charactersAdapter
     }
 
-    private fun showCharactersErrorMessage(message: String?) {
-        binding.charactersFragmentLoader.visibility = View.GONE
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    private fun showCharactersError(message: String?) {
+        with(binding) {
+            charactersFragmentLoader.visibility = View.GONE
+            charactersFragmentError.visibility = View.VISIBLE
+            charactersFragmentError.text = getString(R.string.error_message_text, message, CHARACTERS)
+        }
     }
 
     override fun onCharacterClicked(characterId: String) {
@@ -76,6 +79,7 @@ class CharactersFragment : Fragment(), OnCharacterClicked {
     }
 
     companion object {
+        private const val CHARACTERS = "Characters"
         private const val HOUSE_NAME = "houseName"
         fun getInstance(houseName: String): CharactersFragment {
             val args = Bundle()

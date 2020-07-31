@@ -2,8 +2,7 @@ package com.globant.harrypotterapp.util
 
 open class Event<out T>(private val content: T) {
 
-    var hasBeenHandled = false
-        private set
+    private var hasBeenHandled = false
 
     fun getContentIfNotHandled(): T? {
         return if (hasBeenHandled) {

@@ -18,7 +18,7 @@ class GetHousesUseCaseImpl(
                 result
             }
             is Result.Failure -> {
-                database.getHouses()
+                result
             }
         }
 }

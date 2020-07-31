@@ -28,7 +28,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -42,6 +45,7 @@ class HouseDetailViewModelTest {
     private lateinit var getHouseDetailByIdUseCase: GetHouseDetailByIdUseCase
     private val mockedHouseDetailService: HouseDetailService = mock()
     private val mockedDataBase: HarryPotterDataBase = mock()
+    private val listOfHouse = listOf(House(GRYFFINDOR_ID, GRYFFINDOR))
     private val listOfHouseDetail: List<HouseDetail> = mock()
     private val exception: Exception = mock()
     private val successResponseList = listOf(
@@ -70,7 +74,7 @@ class HouseDetailViewModelTest {
     fun `when getHouseDetail return success result`() {
         val houseDetailLiveData = houseDetailViewModel.getHouseDetailLiveData().testObserver()
 
-        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOf(House(GRYFFINDOR_ID, GRYFFINDOR))))
+        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOfHouse))
         whenever(mockedHouseDetailService.getHouseDetailById(GRYFFINDOR_ID)).thenReturn(Result.Success(data = listOfHouseDetail))
 
         runBlocking {
@@ -78,11 +82,15 @@ class HouseDetailViewModelTest {
         }
 
         verify(mockedDataBase).getHouseByName(GRYFFINDOR)
+        verify(mockedDataBase).updateHouseDetail(listOfHouseDetail)
         verify(mockedHouseDetailService).getHouseDetailById(GRYFFINDOR_ID)
 
-        assertEquals(successResponseList[ZERO].status, houseDetailLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, houseDetailLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, houseDetailLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, houseDetailLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(
+            successResponseList[SECOND_RESPONSE].status,
+            houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status
+        )
+        assertEquals(successResponseList[SECOND_RESPONSE].data, houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -97,16 +105,19 @@ class HouseDetailViewModelTest {
 
         verify(mockedDataBase).getHouseByName(WRONG_HOUSE_NAME)
 
-        assertEquals(failureResponseList[ZERO].status, houseDetailLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].status, houseDetailLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].error, houseDetailLiveData.observedValues[ONE]?.peekContent()?.error)
+        assertEquals(failureResponseList[FIRST_RESPONSE].status, houseDetailLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(
+            failureResponseList[SECOND_RESPONSE].status,
+            houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status
+        )
+        assertEquals(failureResponseList[SECOND_RESPONSE].error, houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 
     @Test
     fun `on getting houseDetail from API returns failure in result, then gets data from database`() {
         val houseDetailLiveData = houseDetailViewModel.getHouseDetailLiveData().testObserver()
 
-        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOf(House(GRYFFINDOR_ID, GRYFFINDOR))))
+        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOfHouse))
         whenever(mockedHouseDetailService.getHouseDetailById(GRYFFINDOR_ID)).thenReturn(Result.Failure(exception = exception))
         whenever(mockedDataBase.getHouseDetailByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOfHouseDetail))
 
@@ -117,9 +128,12 @@ class HouseDetailViewModelTest {
         verify(mockedHouseDetailService).getHouseDetailById(GRYFFINDOR_ID)
         verify(mockedDataBase).getHouseDetailByName(GRYFFINDOR)
 
-        assertEquals(successResponseList[ZERO].status, houseDetailLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, houseDetailLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, houseDetailLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, houseDetailLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(
+            successResponseList[SECOND_RESPONSE].status,
+            houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status
+        )
+        assertEquals(successResponseList[SECOND_RESPONSE].data, houseDetailLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -127,7 +141,7 @@ class HouseDetailViewModelTest {
         val spellsLiveData = houseDetailViewModel.getHouseDetailLiveData().testObserver()
         val failureResult = Result.Failure(exception = exception)
 
-        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOf(House(GRYFFINDOR_ID, GRYFFINDOR))))
+        whenever(mockedDataBase.getHouseByName(GRYFFINDOR)).thenReturn(Result.Success(data = listOfHouse))
         whenever(mockedHouseDetailService.getHouseDetailById(GRYFFINDOR_ID)).thenReturn(failureResult)
         whenever(mockedDataBase.getHouseDetailByName(GRYFFINDOR)).thenReturn(failureResult)
 
@@ -138,15 +152,12 @@ class HouseDetailViewModelTest {
         verify(mockedHouseDetailService).getHouseDetailById(GRYFFINDOR_ID)
         verify(mockedDataBase).getHouseDetailByName(GRYFFINDOR)
 
-        assertEquals(failureResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
+        assertEquals(failureResponseList[FIRST_RESPONSE].status, spellsLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].status, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].error, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 
     companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
-        private const val GRYFFINDOR = "Gryffindor"
         private const val WRONG_HOUSE_NAME = "Griffindor"
         private const val GRYFFINDOR_ID = "5a05e2b252f721a3cf2ea33f"
     }

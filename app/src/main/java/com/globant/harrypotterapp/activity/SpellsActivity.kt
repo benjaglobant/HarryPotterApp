@@ -2,12 +2,12 @@ package com.globant.harrypotterapp.activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.domain.entity.Spell
+import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.adapter.SpellsAdapter
 import com.globant.harrypotterapp.databinding.ActivitySpellsBinding
 import com.globant.harrypotterapp.util.Event
@@ -46,12 +46,16 @@ class SpellsActivity : AppCompatActivity() {
         binding.spellsActivityRecyclerView.adapter = spellsAdapter
     }
 
-    private fun showSpellsError(error: String?) {
-        binding.spellsActivityLoader.visibility = View.GONE
-        error?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
+    private fun showSpellsError(message: String?) {
+        with(binding) {
+            spellsActivityLoader.visibility = View.GONE
+            spellsActivityError.visibility = View.VISIBLE
+            spellsActivityError.text = getString(R.string.error_message_text, message, SPELLS)
+        }
     }
 
     companion object {
+        private const val SPELLS = "Spells"
         fun getIntent(context: Context): Intent = Intent(context, SpellsActivity::class.java)
     }
 }

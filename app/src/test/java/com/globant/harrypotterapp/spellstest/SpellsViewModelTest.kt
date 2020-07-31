@@ -27,7 +27,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -78,10 +80,11 @@ class SpellsViewModelTest {
         }
 
         verify(mockedSpellsService).getSpells()
+        verify(mockedDatabase).updateSpells(listOfSpells)
 
-        assertEquals(successResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, spellsLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, spellsLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -97,11 +100,11 @@ class SpellsViewModelTest {
 
         verify(mockedSpellsService).getSpells()
 
-        val dataFirstTime = spellsLiveData.observedValues[ONE]?.getContentIfNotHandled()
-        assertEquals(successResponseList[ONE].status, dataFirstTime?.status)
-        assertEquals(successResponseList[ONE].data, dataFirstTime?.data)
+        val dataFirstTime = spellsLiveData.observedValues[SECOND_RESPONSE]?.getContentIfNotHandled()
+        assertEquals(successResponseList[SECOND_RESPONSE].status, dataFirstTime?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, dataFirstTime?.data)
 
-        val dataSecondTime = spellsLiveData.observedValues[ONE]?.getContentIfNotHandled()
+        val dataSecondTime = spellsLiveData.observedValues[SECOND_RESPONSE]?.getContentIfNotHandled()
         assertEquals(null, dataSecondTime?.data)
         assertEquals(null, dataSecondTime?.status)
     }
@@ -121,9 +124,9 @@ class SpellsViewModelTest {
         verify(mockedSpellsService).getSpells()
         verify(mockedDatabase).getSpellsFromDataBase()
 
-        assertEquals(successResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, spellsLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, spellsLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -141,14 +144,8 @@ class SpellsViewModelTest {
         verify(mockedSpellsService).getSpells()
         verify(mockedDatabase).getSpellsFromDataBase()
 
-        assertEquals(errorResponseList[ZERO].status, spellsLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].status, spellsLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].error, spellsLiveData.observedValues[ONE]?.peekContent()?.error)
-    }
-
-    companion object {
-        private const val TEST_THREAD = "testThread"
-        private const val ZERO = 0
-        private const val ONE = 1
+        assertEquals(errorResponseList[FIRST_RESPONSE].status, spellsLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(errorResponseList[SECOND_RESPONSE].status, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(errorResponseList[SECOND_RESPONSE].error, spellsLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 }

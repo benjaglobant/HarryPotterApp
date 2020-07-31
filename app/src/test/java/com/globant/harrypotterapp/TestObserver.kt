@@ -1,4 +1,4 @@
-package test.com.globant.harrypotterapp
+package com.globant.harrypotterapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

@@ -8,7 +8,7 @@ import com.globant.domain.entity.Spell
 import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.ActivitySpellsCardViewBinding
 
-class SpellsAdapter() : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
+class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
 
     private val spells = mutableListOf<Spell>()
 
@@ -34,13 +34,11 @@ class SpellsAdapter() : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         private val binding = ActivitySpellsCardViewBinding.bind(itemView)
-        fun bind(item: Spell) = with(itemView) {
-            item.let {
-                binding.apply {
-                    activitySpellsCardViewSpell.text = it.spell
-                    activitySpellsCardViewType.text = it.type
-                    activitySpellsCardViewEffect.text = it.effect
-                }
+        fun bind(item: Spell) = item.let {
+            binding.apply {
+                activitySpellsCardViewSpell.text = it.spell
+                activitySpellsCardViewType.text = it.type
+                activitySpellsCardViewEffect.text = it.effect
             }
         }
     }

@@ -27,7 +27,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -77,9 +80,9 @@ class CharactersViewModelTest {
 
         verify(mockedCharactersService).getCharactersByHouse(GRYFFINDOR)
 
-        assertEquals(successResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, charactersLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -96,9 +99,9 @@ class CharactersViewModelTest {
         verify(mockedCharactersService).getCharactersByHouse(GRYFFINDOR)
         verify(mockedDatabase).getCharactersByHouseName(GRYFFINDOR)
 
-        assertEquals(successResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, charactersLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].data, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.data)
     }
 
     @Test
@@ -116,14 +119,8 @@ class CharactersViewModelTest {
         verify(mockedCharactersService).getCharactersByHouse(GRYFFINDOR)
         verify(mockedDatabase).getCharactersByHouseName(GRYFFINDOR)
 
-        assertEquals(failureResponseList[ZERO].status, charactersLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].status, charactersLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(failureResponseList[ONE].error, charactersLiveData.observedValues[ONE]?.peekContent()?.error)
-    }
-
-    companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
-        private const val GRYFFINDOR = "Gryffindor"
+        assertEquals(failureResponseList[FIRST_RESPONSE].status, charactersLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].status, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(failureResponseList[SECOND_RESPONSE].error, charactersLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 }

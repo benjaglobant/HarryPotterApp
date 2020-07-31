@@ -17,7 +17,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -49,12 +51,7 @@ class SplashViewModelTest {
             splashViewModel.startTimer().join()
         }
 
-        assertEquals(SplashState.START, liveDataUnderTest.observedValues[ZERO])
-        assertEquals(SplashState.FINISH, liveDataUnderTest.observedValues[ONE])
-    }
-
-    companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
+        assertEquals(SplashState.START, liveDataUnderTest.observedValues[FIRST_RESPONSE])
+        assertEquals(SplashState.FINISH, liveDataUnderTest.observedValues[SECOND_RESPONSE])
     }
 }

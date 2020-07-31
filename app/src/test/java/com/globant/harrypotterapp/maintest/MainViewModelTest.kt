@@ -27,7 +27,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import test.com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.testObserver
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.SECOND_RESPONSE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -63,7 +66,7 @@ class MainViewModelTest {
         val listOfHouses: List<House> = mock()
         val successResponseList = listOf(
             MainData(status = MainStatus.LOADING_MAIN),
-            MainData(status = MainStatus.SUCCESS_MAIN, data = listOfHouses)
+            MainData(status = MainStatus.SUCCESS_MAIN)
         )
 
         whenever(mockedHouseService.getHouses()).thenReturn(successResult)
@@ -75,9 +78,8 @@ class MainViewModelTest {
         verify(mockedHouseService).getHouses()
         verify(mockedDataBase).updateHouses(listOfHouses)
 
-        assertEquals(successResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(successResponseList[ONE].data, housesLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(successResponseList[FIRST_RESPONSE].status, housesLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(successResponseList[SECOND_RESPONSE].status, housesLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
     }
 
     @Test
@@ -87,27 +89,40 @@ class MainViewModelTest {
         val exception: Exception = mock()
         val errorResponseList = listOf(
             MainData(status = MainStatus.LOADING_MAIN),
-            MainData(status = MainStatus.ERROR_MAIN, data = null, error = exception)
+            MainData(status = MainStatus.ERROR_MAIN, error = exception)
         )
 
         whenever(mockedHouseService.getHouses()).thenReturn(failureResult)
         whenever(failureResult.exception).thenReturn(exception)
-        whenever(mockedDataBase.getHouses()).thenReturn(failureResult)
 
         runBlocking {
             mainViewModel.fetchHouses().join()
         }
 
         verify(mockedHouseService).getHouses()
-        verify(mockedDataBase).getHouses()
 
-        assertEquals(errorResponseList[ZERO].status, housesLiveData.observedValues[ZERO]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].status, housesLiveData.observedValues[ONE]?.peekContent()?.status)
-        assertEquals(errorResponseList[ONE].data, housesLiveData.observedValues[ONE]?.peekContent()?.data)
+        assertEquals(errorResponseList[FIRST_RESPONSE].status, housesLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(errorResponseList[SECOND_RESPONSE].status, housesLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.status)
+        assertEquals(errorResponseList[SECOND_RESPONSE].error, housesLiveData.observedValues[SECOND_RESPONSE]?.peekContent()?.error)
     }
 
-    companion object {
-        private const val ZERO = 0
-        private const val ONE = 1
+    @Test
+    fun `when goToSpells is clicked then post a new state in live data`() {
+        val housesLiveData = mainViewModel.getHousesLiveData().testObserver()
+
+        mainViewModel.goToSpells()
+
+        assertEquals(MainData(status = MainStatus.GO_SPELLS).status, housesLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+    }
+
+    @Test
+    fun `when goToHouse is clicked then post a new state in live data`() {
+        val housesLiveData = mainViewModel.getHousesLiveData().testObserver()
+        val mainStatus = MainData(status = MainStatus.GO_HOUSE, houseName = GRYFFINDOR)
+
+        mainViewModel.goToHouse(GRYFFINDOR)
+
+        assertEquals(mainStatus.status, housesLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.status)
+        assertEquals(mainStatus.houseName, housesLiveData.observedValues[FIRST_RESPONSE]?.peekContent()?.houseName)
     }
 }
