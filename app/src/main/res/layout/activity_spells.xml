@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.SpellsActivity"
-    android:background="@drawable/spells_background">
+    android:background="@drawable/spells_background"
+    tools:ignore="Overdraw">
 
     <ProgressBar
         android:id="@+id/spells_activity_loader"
@@ -14,6 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/spells_activity_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/error_background"
+        style="@style/style_error_message_text_view"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/spells_activity_recycler_view"

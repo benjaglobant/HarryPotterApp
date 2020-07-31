@@ -11,7 +11,7 @@
     <Button
         android:id="@+id/main_activity_gryffindor_button"
         style="@style/style_main_activity_button_margin_top"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/gryffindor"
         app:layout_constraintBottom_toTopOf="@+id/main_activity_hufflepuff_button"
@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/main_activity_slytherin_button"
         style="@style/style_main_activity_button_margin_top"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/slytherin"
         app:layout_constraintBottom_toTopOf="@id/main_activity_ravenclaw_button"
@@ -33,7 +33,7 @@
     <Button
         android:id="@+id/main_activity_hufflepuff_button"
         style="@style/style_main_activity_button_margin_top"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/hufflepuff"
         app:layout_constraintBottom_toTopOf="@id/main_activity_spells_button"
@@ -44,7 +44,7 @@
     <Button
         android:id="@+id/main_activity_ravenclaw_button"
         style="@style/style_main_activity_button_margin_top"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/ravenclaw"
         app:layout_constraintBottom_toTopOf="@id/main_activity_spells_button"

@@ -8,18 +8,18 @@ class CharacterDetailMapper : BaseMapper<CharacterDetailResponse, CharacterDetai
         CharacterDetail(
             id,
             name,
-            role?.let { it } ?: UNKNOWN,
+            role ?: UNKNOWN,
             house,
             ministryOfMagic?.let { getStringValueForDetail(it) } ?: UNKNOWN,
             orderOfThePhoenix?.let { getStringValueForDetail(it) } ?: UNKNOWN,
             dumbledoresArmy?.let { getStringValueForDetail(dumbledoresArmy) } ?: UNKNOWN,
             deathEater?.let { getStringValueForDetail(it) } ?: UNKNOWN,
-            bloodStatus?.let { it } ?: UNKNOWN,
-            species?.let { it } ?: UNKNOWN
+            bloodStatus ?: UNKNOWN,
+            species ?: UNKNOWN
         )
     }
 
-    private fun getStringValueForDetail(detail: Boolean): String = if (detail?.let { it }) YES else NO
+    private fun getStringValueForDetail(detail: Boolean): String = if (detail) YES else NO
 
     companion object {
         private const val YES = "Yes"

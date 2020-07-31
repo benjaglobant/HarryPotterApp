@@ -2,10 +2,9 @@ package com.globant.harrypotterapp.activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.globant.domain.entity.CharacterDetail
 import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.ActivityCharacterDetailBinding
@@ -35,9 +34,15 @@ class CharacterDetailActivity : AppCompatActivity() {
     private fun updateUI(data: Event<CharacterDetailData<CharacterDetail>>) {
         val characterDetail = data.getContentIfNotHandled()
         when (characterDetail?.status) {
-            LOADING_CHARACTER_DETAILS -> { binding.characterDetailActivityLoader.visibility = View.VISIBLE }
-            SUCCESS_CHARACTER_DETAILS -> { showCharacterDetails(characterDetail.data) }
-            ERROR_CHARACTER_DETAILS -> { showCharacterDetailError(characterDetail.error?.message) }
+            LOADING_CHARACTER_DETAILS -> {
+                binding.characterDetailActivityLoader.visibility = View.VISIBLE
+            }
+            SUCCESS_CHARACTER_DETAILS -> {
+                showCharacterDetails(characterDetail.data)
+            }
+            ERROR_CHARACTER_DETAILS -> {
+                showCharacterDetailError(characterDetail.error?.message)
+            }
         }
     }
 
@@ -83,12 +88,18 @@ class CharacterDetailActivity : AppCompatActivity() {
     }
 
     private fun showCharacterDetailError(message: String?) {
-        binding.characterDetailActivityLoader.visibility = View.GONE
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        with(binding) {
+            characterDetailActivityLoader.visibility = View.GONE
+            characterDetailActivityToolbar.title = getString(R.string.error_title)
+            characterDetailActivityError.visibility = View.VISIBLE
+            characterDetailActivityError.text =
+                getString(R.string.error_message_text, message, CHARACTER_DETAILS)
+        }
     }
 
     companion object {
         private const val CHARACTER_ID = "characterId"
+        private const val CHARACTER_DETAILS = "Character details"
         fun getIntent(context: Context, characterId: String): Intent =
             Intent(context, CharacterDetailActivity::class.java).putExtra(CHARACTER_ID, characterId)
     }

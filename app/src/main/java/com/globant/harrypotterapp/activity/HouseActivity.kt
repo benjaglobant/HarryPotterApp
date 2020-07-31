@@ -46,6 +46,7 @@ class HouseActivity : AppCompatActivity() {
 
     companion object {
         const val HOUSE_NAME = "HouseName"
-        fun getIntent(activity: Activity): Intent = Intent(activity, HouseActivity::class.java)
+        fun getIntent(activity: Activity, houseName: String): Intent =
+            Intent(activity, HouseActivity::class.java).putExtra(HOUSE_NAME, houseName)
     }
 }

@@ -8,7 +8,7 @@ class CharacterMapper : BaseMapper<CharacterResponse, Character> {
         Character(
             this.id,
             this.name,
-            this.role?.let { it } ?: UNKNOWN_ROLE
+            this.role ?: UNKNOWN_ROLE
         )
     }
 

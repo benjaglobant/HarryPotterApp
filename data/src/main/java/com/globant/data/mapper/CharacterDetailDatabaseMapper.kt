@@ -34,7 +34,4 @@ class CharacterDetailDatabaseMapper : BaseMapper<CharacterDetailEntity, Characte
             species
         )
     }
-
-    fun transformToListOfCharacterDetail(charactersDetails: List<CharacterDetailEntity>): List<CharacterDetail> =
-        charactersDetails.map { transform(it) }
 }

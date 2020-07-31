@@ -2,17 +2,13 @@
     <string name="app_name">HarryPotterApp</string>
     <string name="house_detail_tab">House Detail</string>
     <string name="characters_tab">Characters</string>
-    <string name="house_detail_fragment_text">HOUSE DETAIL FRAGMENT</string>
-    <string name="house_characters_fragment_text">HOUSE CHARACTERS FRAGMENT</string>
     <string name="house_detail_fragment_name_text">Name: %1$s</string>
     <string name="house_detail_fragment_mascot_text">Mascot:  %1$s</string>
     <string name="house_detail_fragment_head_of_house_text">Director:  %1$s</string>
     <string name="house_detail_fragment_ghost_text">Ghost:  %1$s</string>
     <string name="house_detail_fragment_founder_text">Founder:  %1$s</string>
-    <string name="house_detail_fragment_error_message">Error: House details not found</string>
     <string name="characters_fragment_card_view_name_text">Name:  %1$s</string>
     <string name="characters_fragment_card_view_role_text">Role:  %1$s</string>
-    <string name="character_detail_activity_title_text">Details of:</string>
     <string name="character_detail_activity_role_text">Role:  %1$s</string>
     <string name="character_detail_activity_house_text">House:  %1$s</string>
     <string name="character_detail_activity_ministry_of_magic_text">Ministry of Magic:  %1$s</string>
@@ -21,4 +17,17 @@
     <string name="character_detail_activity_death_eater_text">Death Eater:  %1$s</string>
     <string name="character_detail_activity_blood_status_text">Blood Status:  %1$s</string>
     <string name="character_detail_activity_species_text">Species:  %1$s</string>
+    <string name="main_activity_error_message">Error: Houses not found</string>
+    <string name="main_activity_success_message">Houses loaded correctly</string>
+    <string name="main_activity_loading_message">Getting houses</string>
+    <string name="error_title">Error occurred</string>
+    <string name="error_message_text">
+        %1$s: The %2$s were neither obtained by the service nor by the database. \n Please go back to continue.
+    </string>
+    <string name="characters_text">Characters</string>
+    <string name="house_detail_text">House details</string>
+    <string name="spells_text">Spells</string>
+    <string name="splash_screen_hogwarts_shield_image">hogwarts_shield_image</string>
+    <string name="expanded_collapsing_toolbar_image_description">expanded_collapsing_toolbar_image</string>
+    <string name="house_detail_shield_image_description">house\'s shield</string>
 </resources>

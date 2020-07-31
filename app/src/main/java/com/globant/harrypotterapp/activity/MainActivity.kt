@@ -3,8 +3,17 @@ package com.globant.harrypotterapp.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.ActivityMainBinding
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.HUFFLEPUFF
+import com.globant.harrypotterapp.util.Constants.RAVENCLAW
+import com.globant.harrypotterapp.util.Constants.SLYTHERIN
+import com.globant.harrypotterapp.util.Event
+import com.globant.harrypotterapp.viewmodel.MainData
+import com.globant.harrypotterapp.viewmodel.MainStatus
 import com.globant.harrypotterapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,33 +27,67 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setOnClickListeners()
+        mainViewModel.getHousesLiveData().observe(::getLifecycle, ::updateUI)
+        mainViewModel.fetchHouses()
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainViewModel.fetchHouses()
     }
 
     private fun setOnClickListeners() {
         binding.mainActivitySpellsButton.setOnClickListener {
-            startActivity(SpellsActivity.getIntent(this))
+            mainViewModel.goToSpells()
         }
         binding.mainActivityGryffindorButton.setOnClickListener {
-            startActivity(HouseActivity.getIntent(this).putExtra(HOUSE_NAME, GRYFFINDOR))
+            mainViewModel.goToHouse(GRYFFINDOR)
         }
         binding.mainActivityHufflepuffButton.setOnClickListener {
-            startActivity(HouseActivity.getIntent(this).putExtra(HOUSE_NAME, HUFFLEPUFF))
+            mainViewModel.goToHouse(HUFFLEPUFF)
         }
         binding.mainActivityRavenclawButton.setOnClickListener {
-            startActivity(HouseActivity.getIntent(this).putExtra(HOUSE_NAME, RAVENCLAW))
+            mainViewModel.goToHouse(RAVENCLAW)
         }
         binding.mainActivitySlytherinButton.setOnClickListener {
-            startActivity(HouseActivity.getIntent(this).putExtra(HOUSE_NAME, SLYTHERIN))
+            mainViewModel.goToHouse(SLYTHERIN)
         }
+    }
+
+    private fun updateUI(data: Event<MainData>) {
+        val mainState = data.getContentIfNotHandled()
+        when (mainState?.status) {
+            MainStatus.LOADING_MAIN -> {
+                showMessage(R.string.main_activity_loading_message)
+            }
+            MainStatus.SUCCESS_MAIN -> {
+                showMessage(R.string.main_activity_success_message)
+            }
+            MainStatus.ERROR_MAIN -> {
+                showMessage(R.string.main_activity_error_message)
+            }
+            MainStatus.GO_HOUSE -> {
+                openHouseActivity(mainState.houseName)
+            }
+            MainStatus.GO_SPELLS -> {
+                openSpellsActivity()
+            }
+        }
+    }
+
+    private fun showMessage(stringId: Int) {
+        Toast.makeText(this, getString(stringId), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openHouseActivity(houseName: String) {
+        startActivity(HouseActivity.getIntent(this, houseName))
+    }
+
+    private fun openSpellsActivity() {
+        startActivity(SpellsActivity.getIntent(this))
     }
 
     companion object {
         fun getIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
-        private const val GRYFFINDOR = "Gryffindor"
-        private const val RAVENCLAW = "Ravenclaw"
-        private const val SLYTHERIN = "Slytherin"
-        private const val HUFFLEPUFF = "Hufflepuff"
-        private const val HOUSE_NAME = "HouseName"
     }
 }

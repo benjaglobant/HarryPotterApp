@@ -7,13 +7,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     app:layoutDescription="@xml/activity_splash_scene"
-    tools:context=".activity.SplashActivity">
+    tools:context=".activity.SplashActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/splash_activity_hogwarts_image_view_margin"
-        android:src="@drawable/hogwarts" />
+        android:src="@drawable/hogwarts"
+        android:contentDescription="@string/splash_screen_hogwarts_shield_image" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

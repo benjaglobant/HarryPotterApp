@@ -1,14 +1,18 @@
 package com.globant.harrypotterapp.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.globant.domain.entity.HouseDetail
 import com.globant.harrypotterapp.R
 import com.globant.harrypotterapp.databinding.FragmentHouseDetailBinding
+import com.globant.harrypotterapp.util.Constants.FIRST_RESPONSE
+import com.globant.harrypotterapp.util.Constants.GRYFFINDOR
+import com.globant.harrypotterapp.util.Constants.HUFFLEPUFF
+import com.globant.harrypotterapp.util.Constants.RAVENCLAW
+import com.globant.harrypotterapp.util.Constants.SLYTHERIN
 import com.globant.harrypotterapp.util.Event
 import com.globant.harrypotterapp.viewmodel.HouseDetailData
 import com.globant.harrypotterapp.viewmodel.HouseDetailStatus
@@ -33,8 +37,8 @@ class HouseDetailFragment : Fragment() {
         val houseDetailData = data.getContentIfNotHandled()
         when (houseDetailData?.status) {
             HouseDetailStatus.LOADING_HOUSE_DETAIL -> binding.houseDetailFragmentLoader.visibility = View.VISIBLE
-            HouseDetailStatus.SUCCESS_HOUSE_DETAIL -> showHouseDetailData(houseDetailData.data?.get(ZERO))
-            HouseDetailStatus.ERROR_HOUSE_DETAIL -> showErrorMessage()
+            HouseDetailStatus.SUCCESS_HOUSE_DETAIL -> showHouseDetailData(houseDetailData.data?.get(FIRST_RESPONSE))
+            HouseDetailStatus.ERROR_HOUSE_DETAIL -> showHouseDetailError(houseDetailData.error?.message)
         }
     }
 
@@ -51,22 +55,15 @@ class HouseDetailFragment : Fragment() {
                 RAVENCLAW -> binding.houseDetailFragmentImage.setImageResource(R.drawable.ravenclaw)
                 SLYTHERIN -> binding.houseDetailFragmentImage.setImageResource(R.drawable.slytherin)
                 HUFFLEPUFF -> binding.houseDetailFragmentImage.setImageResource(R.drawable.hufflepuff)
-                else -> showErrorMessage()
             }
         }
     }
 
-    private fun showErrorMessage() {
-        binding.houseDetailFragmentLoader.visibility = View.GONE
-        binding.fragmentHouseDetailRoot.background = context?.getDrawable(R.drawable.hogwarts)
-        Toast.makeText(this.context, getString(R.string.house_detail_fragment_error_message), Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val ZERO = 0
-        private const val GRYFFINDOR = "Gryffindor"
-        private const val RAVENCLAW = "Ravenclaw"
-        private const val SLYTHERIN = "Slytherin"
-        private const val HUFFLEPUFF = "Hufflepuff"
+    private fun showHouseDetailError(message: String?) {
+        with(binding) {
+            houseDetailFragmentLoader.visibility = View.GONE
+            houseDetailFragmentError.visibility = View.VISIBLE
+            houseDetailFragmentError.text = getString(R.string.error_message_text, message, getString(R.string.house_detail_text))
+        }
     }
 }

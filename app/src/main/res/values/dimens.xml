@@ -25,4 +25,7 @@
     <dimen name="character_detail_activity_detail_margin_horizontal">12dp</dimen>
     <dimen name="character_detail_activity_detail_margin_top">12dp</dimen>
     <dimen name="character_detail_activity_text_view_padding_vertical">8dp</dimen>
+    <dimen name="error_text_view_text_size">36sp</dimen>
+    <dimen name="error_text_view_padding">15dp</dimen>
+    <dimen name="error_text_view_margin">15dp</dimen>
 </resources>

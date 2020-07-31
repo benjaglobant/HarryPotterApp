@@ -16,7 +16,7 @@ class CharacterDatabaseMapper : BaseMapper<CharacterEntity, Character> {
         CharacterEntity(
             this.id,
             this.name,
-            this.role?.let { it } ?: UNKNOWN_ROLE,
+            this.role ?: UNKNOWN_ROLE,
             houseName
         )
     }
